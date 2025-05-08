@@ -2,7 +2,7 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: PolicyGenerator
 metadata:
-  name: storgae
+  name: storage
 placementBindingDefaults:
   name: storage
 policyDefaults:
