@@ -5,12 +5,13 @@ operators:
     namespace:
       name: redhat-ods-operator
       create: true
+      global: true
     channels: [fast] # v0,1
     version: "2.19.0" # v1
     catalog: openshift-redhat-operators #v1
     source: redhat-operators # v0
     sourceNamespace: openshift-marketplace # v0
-    enabled: false
+    enabled: true
 
   # authorino
   - name: authorino-operator

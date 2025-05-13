@@ -11,8 +11,10 @@ metadata:
   name: {{ $name }}-og
   namespace: {{ $namespace | quote }}
 spec:
+{{- if not $app.namespace.global }}
   targetNamespaces: 
   - {{ $namespace }}
+{{- end }}
   upgradeStrategy: Default
 {{- end }}
 {{- end }}
