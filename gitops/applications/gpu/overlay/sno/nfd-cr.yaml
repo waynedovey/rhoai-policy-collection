@@ -1,0 +1,12 @@
+---
+apiVersion: nfd.openshift.io/v1
+kind: NodeFeatureDiscovery
+metadata:
+  name: nfd-instance
+  namespace: openshift-nfd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  operand:
+    image: 'registry.redhat.io/openshift4/ose-cluster-nfd-rhel9-operator@sha256:2f8b09592a1eb7b1ce3ef8ab8bf2f772e31162000a6fcfb5e69c4f6afbd07443'
