@@ -13,5 +13,5 @@ spec:
   identifier: nvidia.com/gpu
   tolerations:
     - effect: NoSchedule
-      key: nvidia.com/gpu
-      value: NVIDIA-L4-SHARED
+      key: nvidia.com/gpu.present
+      value: true
