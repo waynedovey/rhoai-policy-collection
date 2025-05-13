@@ -6,7 +6,7 @@ operators:
       name: openshift-nfd
       create: true
       global: false
-    channels: [fast] # v0,1
+    channels: [stable] # v0,1
     version: "nfd.4.18.0-202504282205" # v1
     catalog: openshift-redhat-operators #v1
     source: redhat-operators # v0
