@@ -14,4 +14,4 @@ spec:
   tolerations:
     - effect: NoSchedule
       key: nvidia.com/gpu.present
-      value: true
+      value: "true"
