@@ -27,7 +27,7 @@ spec:
         namespace: connectivity-link
       source:
         repoURL: https://github.com/eformat/rhoai-policy-collection.git
-        path: gitops/applications/connectivity-link/overlays/sno
+        path: gitops/applications/connectivity-link/overlay/sno
         plugin:
           name: argocd-novault-plugin-kustomize
         targetRevision: main
