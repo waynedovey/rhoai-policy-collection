@@ -4,7 +4,7 @@ resources:
   - distributed-workloads.yaml
   - namespace.yaml
   - llama-cpp-runtime-template.yaml
-#  - serving-llama32-vllm.yaml
+  - serving-llama32-vllm.yaml
   - serving-qwen31-cpp.yaml
   - serving-qwen25-cpp.yaml
 
