@@ -26,8 +26,8 @@ spec:
         - -m
         - vllm.entrypoints.openai.api_server
         - --port=8080
-        - --model=/mnt/models/Llama-3.2-3B-Instruct-Q4_K_M.gguf
-        - --served-model-name=Llama-3.2-3B-Instruct-Q4_K_M.gguf
+        - --model=/mnt/models/Llama-3.2-1B-Instruct-Q8_0.gguf
+        - --served-model-name=Llama-3.2-1B-Instruct-Q8_0.gguf
         - --quantization=gguf
         - --max-model-len=6000
         - --enforce-eager
@@ -80,7 +80,7 @@ spec:
       runtime: sno-llama32-vllm
       storage:
         key: connection-minio
-        path: Llama-3.2-3B-Instruct-Q4_K_M.gguf
+        path: Llama-3.2-1B-Instruct-Q8_0.gguf
     tolerations:
     - effect: NoSchedule
       key: nvidia.com/gpu
