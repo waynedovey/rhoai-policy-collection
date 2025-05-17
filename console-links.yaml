@@ -1,0 +1,24 @@
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: argocd
+spec:
+  applicationMenu:
+    section: SRE
+    imageURL: https://argo-cd.readthedocs.io/en/stable/assets/logo.png
+  href: https://global-policy-server-openshift-gitops.apps.$CLUSTER_NAME.$BASE_DOMAIN
+  location: ApplicationMenu
+  text: argocd
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: minio
+spec:
+  applicationMenu:
+    section: SRE
+    imageURL: https://min.io/resources/img/logo/MINIO_Bird.png
+  href: https://minio-minio.apps.$CLUSTER_NAME.$BASE_DOMAIN
+  location: ApplicationMenu
+  text: minio
