@@ -53,7 +53,7 @@ kind: InferenceService
 metadata:
   annotations:
     openshift.io/display-name: sno-llama32-vllm
-    serving.knative.openshift.io/enablePassthrough: "true"
+    #serving.knative.openshift.io/enablePassthrough: "true"
     sidecar.istio.io/inject: "true"
     sidecar.istio.io/rewriteAppHTTPProbers: "true"
     serving.kserve.io/deploymentMode: Serverless

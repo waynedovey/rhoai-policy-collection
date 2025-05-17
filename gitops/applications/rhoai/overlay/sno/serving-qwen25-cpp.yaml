@@ -62,7 +62,7 @@ kind: InferenceService
 metadata:
   annotations:
     openshift.io/display-name: sno-qwen25-cpp
-    serving.knative.openshift.io/enablePassthrough: "true"
+    #serving.knative.openshift.io/enablePassthrough: "true"
     sidecar.istio.io/inject: "true"
     sidecar.istio.io/rewriteAppHTTPProbers: "true"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
