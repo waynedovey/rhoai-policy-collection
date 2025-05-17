@@ -22,19 +22,19 @@ spec:
   containers:
   - env:
     - name: LLAMA_ARG_MODEL
-      value: /mnt/modelsQwen3-1.7B-Q8_0.gguf
+      value: /mnt/models/Qwen3-1.7B-Q8_0.gguf
     - name: LLAMA_ARG_N_GPU_LAYERS
       value: "99999"
     - name: LLAMA_ARG_CTX_SIZE
-      value: "10000" # "71680"
+      value: "30000" # "71680"
     - name: LLAMA_ARG_N_PARALLEL
       value: "3"
     - name: LLAMA_ARG_ENDPOINT_METRICS
       value: "1"
     - name: LLAMA_ARG_PORT
       value: "8080"
-    - name: LLAMA_ARG_CHAT_TEMPLATE
-      value: llama3
+#    - name: LLAMA_ARG_CHAT_TEMPLATE
+#      value: qwen3
     image: quay.io/eformat/llama-cpp:latest
     name: kserve-container
     ports:
