@@ -1,4 +1,7 @@
 ---
+resources:
+  - istiod.yaml
+
 helmGlobals:
   chartHome: ../../../
 
