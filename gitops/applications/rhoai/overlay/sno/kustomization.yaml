@@ -7,7 +7,8 @@ resources:
   - serving-llama32-vllm.yaml
 #  - serving-granite32-vllm.yaml
   - serving-qwen31-cpp.yaml
-  - serving-qwen25-cpp.yaml
+#  - serving-qwen25-cpp.yaml
+  - serving-granite-vision32-vllm.yaml
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
