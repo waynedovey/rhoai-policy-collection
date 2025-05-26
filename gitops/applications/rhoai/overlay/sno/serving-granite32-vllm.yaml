@@ -28,7 +28,7 @@ spec:
         - --port=8080
         - --model=/mnt/models
         - --served-model-name=granite-3.2-2b-instruct
-        - --max-model-len=6000
+        - --max-model-len=8000
         - --enforce-eager
         - --gpu_memory_utilization=0.35
         - --enable-auto-tool-choice
