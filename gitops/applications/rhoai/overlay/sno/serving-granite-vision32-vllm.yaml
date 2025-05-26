@@ -30,7 +30,7 @@ spec:
         - --served-model-name=granite-vision-3.2-2b
         - --max-model-len=3000
         - --enforce-eager
-        - --gpu_memory_utilization=0.25
+        - --gpu_memory_utilization=0.30
       env:
         - name: HF_HOME
           value: /tmp/hf_home
