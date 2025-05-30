@@ -19,7 +19,7 @@ operators:
       name: openshift-operators
       create: false
     channels: [stable] # v0,1
-    version: "1.2.1" # v1
+    version: "1.2.2" # v1
     catalog: openshift-redhat-operators #v1
     source: redhat-operators # v0
     sourceNamespace: openshift-marketplace # v0
