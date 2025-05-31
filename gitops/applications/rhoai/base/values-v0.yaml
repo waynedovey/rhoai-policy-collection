@@ -23,7 +23,7 @@ operators:
     catalog: openshift-redhat-operators #v1
     source: redhat-operators # v0
     sourceNamespace: openshift-marketplace # v0
-    enabled: true
+    enabled: false
 
   # tekton pipelines
   - name: openshift-pipelines-operator-rh
