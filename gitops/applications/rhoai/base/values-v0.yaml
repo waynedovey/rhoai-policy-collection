@@ -61,4 +61,4 @@ operators:
     catalog: openshift-redhat-operators #v1
     source: redhat-operators # v0
     sourceNamespace: openshift-marketplace # v0
-    enabled: false
+    enabled: true
