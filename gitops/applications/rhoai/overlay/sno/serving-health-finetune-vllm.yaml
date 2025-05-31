@@ -10,6 +10,8 @@ metadata:
     opendatahub.io/template-display-name: vLLM ServingRuntime for KServe
     opendatahub.io/template-name: vllm-runtime
     openshift.io/display-name: health-finetune
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "4"
   labels:
     opendatahub.io/dashboard: "true"
   name: health-finetune
@@ -50,6 +52,8 @@ metadata:
     sidecar.istio.io/inject: "true"
     sidecar.istio.io/rewriteAppHTTPProbers: "true"
     serving.kserve.io/deploymentMode: Serverless
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/sync-wave: "4"
   labels:
     opendatahub.io/dashboard: "true"
   name: health-finetune

@@ -11,7 +11,7 @@ metadata:
     opendatahub.io/template-name: vllm-runtime
     openshift.io/display-name: sno-granite-vision32-vllm
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "4"
   labels:
     opendatahub.io/dashboard: "true"
   name: sno-granite-vision32-vllm
@@ -54,7 +54,7 @@ metadata:
     sidecar.istio.io/rewriteAppHTTPProbers: "true"
     serving.kserve.io/deploymentMode: Serverless
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "4"
   labels:
     opendatahub.io/dashboard: "true"
   name: sno-granite-vision32-vllm
