@@ -16,26 +16,28 @@ operators:
   # authorino
   - name: authorino-operator
     namespace:
-      name: openshift-operators
-      create: false
+      name: openshift-authorino
+      create: true
+      global: true
     channels: [stable] # v0,1
     version: "1.2.2" # v1
     catalog: openshift-redhat-operators #v1
     source: redhat-operators # v0
     sourceNamespace: openshift-marketplace # v0
-    enabled: false
+    enabled: true
 
   # tekton pipelines
   - name: openshift-pipelines-operator-rh
     namespace:
-      name: openshift-operators
-      create: false
+      name: openshift-pipelines
+      create: true
+      global: true
     channels: [latest] # v0,1
     version: "1.18.0" # v1
     catalog: openshift-redhat-operators #v1
     source: redhat-operators # v0
     sourceNamespace: openshift-marketplace # v0
-    enabled: false
+    enabled: true
 
   # serverless
   - name: serverless-operator
