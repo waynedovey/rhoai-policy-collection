@@ -1,15 +1,21 @@
 ---
-apiVersion: nfd.openshift.io/v1
 kind: NodeFeatureDiscovery
+apiVersion: nfd.openshift.io/v1
 metadata:
   name: nfd-instance
   namespace: openshift-nfd
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
+  customConfig:
+    configData: |
+      #    - name: "more.kernel.features"
+      #      matchOn:
+      #      - loadedKMod: ["example_kmod3"]
+      #    - name: "more.features.by.nodename"
+      #      value: customValue
+      #      matchOn:
+      #      - nodename: ["special-.*-node-.*"]
   operand:
-    image: 'registry.redhat.io/openshift4/ose-node-feature-discovery-rhel9@sha256:39a639fc93166e9e14c44dadf04adfb419f98a832b690e8b7bb301da68b5a2f3'
+    imagePullPolicy: IfNotPresent
     servicePort: 12000
   workerConfig:
     configData: |
@@ -119,12 +125,3 @@ spec:
       #            vendor: ["15b3"]
       #            device: ["1014", "1017"]
       #          loadedKMod : ["vendor_kmod1", "vendor_kmod2"]
-  # customConfig:
-  #   configData: |
-  #     #    - name: "more.kernel.features"
-  #     #      matchOn:
-  #     #      - loadedKMod: ["example_kmod3"]
-  #     #    - name: "more.features.by.nodename"
-  #     #      value: customValue
-  #     #      matchOn:
-  #     #      - nodename: ["special-.*-node-.*"]
