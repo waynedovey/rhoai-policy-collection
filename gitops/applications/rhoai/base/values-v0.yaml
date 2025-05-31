@@ -53,8 +53,9 @@ operators:
   # servicemesh
   - name: servicemeshoperator
     namespace:
-      name: openshift-operators
-      create: false
+      name: openshift-servicemesh2
+      create: true
+      global: true
     channels: [stable] # v0,1
     version: "2.6.7-0" # v1
     catalog: openshift-redhat-operators #v1
