@@ -40,14 +40,14 @@ operators:
   # serverless
   - name: serverless-operator
     namespace:
-      name: openshift-operators
-      create: false
+      name: openshift-serverless
+      create: true
     channels: [stable] # v0,1
     version: "1.35.1" # v1
     catalog: openshift-redhat-operators #v1
     source: redhat-operators # v0
     sourceNamespace: openshift-marketplace # v0
-    enabled: false
+    enabled: true
 
   # servicemesh
   - name: servicemeshoperator
