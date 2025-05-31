@@ -6,7 +6,8 @@ resources:
   - llama-cpp-runtime-template.yaml
   - serving-llama32-vllm.yaml
   - serving-granite32-vllm.yaml
-  - serving-qwen31-cpp.yaml
+  - serving-deepseek-qwen3-cpp.yaml
+#  - serving-qwen31-cpp.yaml
 #  - serving-qwen25-cpp.yaml
 #  - serving-granite-vision32-vllm.yaml
 
