@@ -10,6 +10,7 @@ resources:
 #  - serving-qwen31-cpp.yaml
 #  - serving-qwen25-cpp.yaml
 #  - serving-granite-vision32-vllm.yaml
+  - model-catalog-unmanaged-sources.yaml
 
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
