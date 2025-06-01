@@ -20,17 +20,27 @@ spec:
     disableClusterManager: false
     disableCustomServingRuntimes: false
     disableDistributedWorkloads: true
+    disableHome: false
     disableISVBadges: false
     disableInfo: false
     disableKServe: false
+    disableKServeAuth: false
+    disableKServeMetrics: false
+    disableModelCatalog: false
     disableModelMesh: false
+    disableModelRegistry: false
+    disableModelRegistrySecureDB: false
     disableModelServing: false
+    disableNIMModelServing: false
     disablePerformanceMetrics: false
     disablePipelines: false
     disableProjectSharing: false
     disableProjects: false
+    disableServingRuntimeParams: false
+    disableStorageClasses: false
     disableSupport: false
     disableTracking: false
+    disableTrustyBiasMetrics: false
     enablement: true
   groupsConfig:
     adminGroups: rhods-admins
