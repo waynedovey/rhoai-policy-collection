@@ -21,11 +21,13 @@ spec:
     disableCustomServingRuntimes: false
     disableDistributedWorkloads: true
     disableHome: false
+    disableHardwareProfiles: false
     disableISVBadges: false
     disableInfo: false
     disableKServe: false
     disableKServeAuth: false
     disableKServeMetrics: false
+    disableFineTuning: false
     disableModelCatalog: false
     disableModelMesh: false
     disableModelRegistry: false
