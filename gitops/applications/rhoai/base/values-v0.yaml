@@ -33,11 +33,11 @@ operators:
       create: true
       global: true
     channels: [latest] # v0,1
-    version: "1.18.0" # v1
+    version: "1.18.1" # v1
     catalog: openshift-redhat-operators #v1
     source: redhat-operators # v0
     sourceNamespace: openshift-marketplace # v0
-    enabled: true
+    enabled: false
 
   # serverless
   - name: serverless-operator
