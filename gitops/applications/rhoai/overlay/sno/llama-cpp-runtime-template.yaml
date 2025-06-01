@@ -22,8 +22,6 @@ objects:
       openshift.io/display-name: LLamaCPP
     name: llama-cpp
   spec:
-    builtInAdapter:
-      modelLoadingTimeoutMillis: 90000
     containers:
     - image: llama-cpp
       name: kserve-container

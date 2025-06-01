@@ -17,8 +17,6 @@ metadata:
   name: sno-deepseek-qwen3-cpp
   namespace: llama-serving
 spec:
-  builtInAdapter:
-    modelLoadingTimeoutMillis: 600000
   containers:
   - env:
     - name: LLAMA_ARG_MODEL

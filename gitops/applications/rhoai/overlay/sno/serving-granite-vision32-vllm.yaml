@@ -60,8 +60,6 @@ metadata:
   name: sno-granite-vision32-vllm
   namespace: llama-serving
 spec:
-  builtInAdapter:
-    modelLoadingTimeoutMillis: 600000
   predictor:
     maxReplicas: 1
     minReplicas: 1

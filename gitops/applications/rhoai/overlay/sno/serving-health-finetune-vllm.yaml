@@ -59,8 +59,6 @@ metadata:
   name: health-finetune
   namespace: llama-serving
 spec:
-  builtInAdapter:
-    modelLoadingTimeoutMillis: 600000
   predictor:
     maxReplicas: 1
     minReplicas: 1
