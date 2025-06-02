@@ -6,7 +6,7 @@ Showcases BYO [ModelCar Catalog](https://github.com/eformat/modelcar-catalog) de
 
 This repo is deployed using [SNO on SPOT](https://github.com/eformat/sno-for-100) in AWS with a g6 NVIDIA instance as an example accelerated infrastructure
 
-> How-to run your GenAI model as a service, inference as a service - on the smell of an oily RAG.
+> How-to run your GenAI infrastructure - (model as a service, inference as a service) - on the smell of an oily RAG.
 
 ## Prerequisite
 
