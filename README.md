@@ -10,12 +10,12 @@ This repo is deployed using [SNO on SPOT](https://github.com/eformat/sno-for-100
 
 ## Prerequisite
 
-OpenShift Cluster with cluster-admin access. See SNO on SPOT using:
+OpenShift Cluster with cluster-admin access. See [SNO on SPOT](https://github.com/eformat/sno-for-100) using:
 
 ```bash
 export INSTANCE_TYPE=g6.8xlarge
 export ROOT_VOLUME_SIZE=400
-export OPENSHIFT_VERSION=4.18.10
+export OPENSHIFT_VERSION=4.18.14
 ```
 
 ## Bootstrap
