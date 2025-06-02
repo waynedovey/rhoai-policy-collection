@@ -83,7 +83,7 @@ spec:
         requests:
           nvidia.com/gpu: "1"
       runtime: sno-deepseek-qwen3-cpp
-      storageUri: oci://quay.io/eformat/deepseek-r1-0528-qwen3-8b-q4_k_m.gguf:latest
+      storageUri: oci://quay.io/eformat/deepseek-r1-0528-qwen3-8b-q4_k_m.gguf:latest-ubi
     tolerations:
     - effect: NoSchedule
       key: nvidia.com/gpu
@@ -102,5 +102,5 @@ metadata:
     openshift.io/display-name: deepseek-r1-0528-qwen3-8b-q4_k_m
     argocd.argoproj.io/sync-wave: "2"
 stringData:
-  URI: oci://quay.io/eformat/deepseek-r1-0528-qwen3-8b-q4_k_m.gguf:latest
+  URI: oci://quay.io/eformat/deepseek-r1-0528-qwen3-8b-q4_k_m.gguf:latest-ubi
 type: Opaque
