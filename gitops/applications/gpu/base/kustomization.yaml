@@ -1,6 +1,6 @@
 ---
 resources:
-#  - nfd-cr.yaml
+  - nfd-cr.yaml
   - configmap.yaml
   - gpu-cluster-policy.yaml
 
