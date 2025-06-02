@@ -1,8 +1,12 @@
 # rhoai-policy-collection
 
-OLM v0,1 support for RHOAI Clusters.
+Showcases OLM v0,1 support for RHOAI Clusters using policy-as-code and Advanced Cluster Manager.
 
-This repo is using [SNO on SPOT](https://github.com/eformat/sno-for-100) in AWS with a g6 NVIDIA instance as an example accelerated infrastructure.
+Showcases BYO [ModelCar Catalog](https://github.com/eformat/modelcar-catalog) deployment of popular open-weight models (deepseek-r1-qwen-distillation, granite, granite-vision, llama) using [vLLM](https://github.com/vllm-project/vllm) and [LLama.cpp](https://github.com/ggml-org/llama.cpp) runtimes.
+
+This repo is deployed using [SNO on SPOT](https://github.com/eformat/sno-for-100) in AWS with a g6 NVIDIA instance as an example accelerated infrastructure
+
+> How-to run your GenAI model as a service, inference as a service - on the smell of an oily RAG.
 
 ## Prerequisite
 
