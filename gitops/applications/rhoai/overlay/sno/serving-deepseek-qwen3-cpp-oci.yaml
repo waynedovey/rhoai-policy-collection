@@ -93,6 +93,7 @@ kind: Secret
 apiVersion: v1
 metadata:
   name: deepseek-r1-0528-qwen3-8b-q4-k-m
+  namespace: llama-serving
   labels:
     opendatahub.io/dashboard: 'true'
   annotations:
