@@ -9,12 +9,12 @@ metadata:
     opendatahub.io/recommended-accelerators: '["nvidia.com/gpu"]'
     opendatahub.io/template-display-name: vLLM ServingRuntime for KServe
     opendatahub.io/template-name: vllm-runtime
-    openshift.io/display-name: sno-granite32-vllm
+    openshift.io/display-name: sno-granite32-8b-vllm
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
     argocd.argoproj.io/sync-wave: "4"
   labels:
     opendatahub.io/dashboard: "true"
-  name: sno-granite32-vllm
+  name: sno-granite32-8b-vllm
   namespace: llama-serving
 spec:
   annotations:
@@ -51,7 +51,7 @@ apiVersion: serving.kserve.io/v1beta1
 kind: InferenceService
 metadata:
   annotations:
-    openshift.io/display-name: sno-granite32-vllm
+    openshift.io/display-name: sno-granite32-8b-vllm
     serving.knative.openshift.io/enablePassthrough: "true"
     sidecar.istio.io/inject: "true"
     sidecar.istio.io/rewriteAppHTTPProbers: "true"
@@ -60,7 +60,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "4"
   labels:
     opendatahub.io/dashboard: "true"
-  name: sno-granite32-vllm
+  name: sno-granite32-8b-vllm
   namespace: llama-serving
 spec:
   predictor:
@@ -75,7 +75,7 @@ spec:
           nvidia.com/gpu: "1"
         requests:
           nvidia.com/gpu: "1"
-      runtime: sno-granite32-vllm
+      runtime: sno-granite32-8b-vllm
       storageUri: oci://quay.io/eformat/granite-3.2-8b-instruct-q8_0.gguf:latest-ubi
     tolerations:
     - effect: NoSchedule
