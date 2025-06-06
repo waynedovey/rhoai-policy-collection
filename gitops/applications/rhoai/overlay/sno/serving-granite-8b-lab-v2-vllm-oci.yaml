@@ -33,7 +33,7 @@ spec:
         - --gpu_memory_utilization=0.99
         - --enable-auto-tool-choice
         - --tool-call-parser=granite
-#        - --chat-template=/app/data/template/tool_chat_template_granite.jinja
+        - --chat-template=/app/data/template/tool_chat_template_granite.jinja
       env:
         - name: HF_HOME
           value: /tmp/hf_home
