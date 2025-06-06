@@ -76,7 +76,7 @@ spec:
         requests:
           nvidia.com/gpu: "1"
       runtime: sno-granite32-vllm
-      storageUri: oci://quay.io/eformat/granite-3.2-8b-instruct:latest-ubi
+      storageUri: oci://quay.io/eformat/granite-3.2-8b-instruct-q8_0.gguf:latest-ubi
     tolerations:
     - effect: NoSchedule
       key: nvidia.com/gpu
@@ -95,5 +95,5 @@ metadata:
     openshift.io/display-name: granite-3.2-8b-instruct
     argocd.argoproj.io/sync-wave: "2"
 stringData:
-  URI: oci://quay.io/eformat/granite-3.2-8b-instruct:latest-ubi
+  URI: oci://quay.io/eformat/granite-3.2-8b-instruct-q8_0.gguf:latest-ubi
 type: Opaque
