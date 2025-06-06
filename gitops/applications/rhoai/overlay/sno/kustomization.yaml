@@ -8,7 +8,7 @@ resources:
 #  - serving-granite32-vllm.yaml
 #  - serving-deepseek-qwen3-cpp.yaml
 #  - serving-llama32-vllm-oci.yaml
-  - serving-granite32-vllm-oci.yaml
+#  - serving-granite32-vllm-oci.yaml
   - serving-deepseek-qwen3-cpp-oci.yaml
 #  - serving-qwen31-cpp.yaml
 #  - serving-qwen25-cpp.yaml
