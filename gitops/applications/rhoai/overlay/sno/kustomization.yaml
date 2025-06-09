@@ -9,10 +9,11 @@ resources:
 #  - serving-deepseek-qwen3-cpp.yaml
 #  - serving-llama32-vllm-oci.yaml
 #  - serving-llama32-3b-vllm-oci.yaml
-  - serving-granite32-vllm-oci.yaml
+#1  - serving-granite32-vllm-oci.yaml
 #  - serving-granite32-8b-vllm-oci.yaml
 #  - serving-granite-8b-lab-v2-vllm-oci.yaml
 #  - serving-deepseek-qwen3-cpp-oci.yaml
+  - serving-deepseek-qwen3-vllm-oci.yaml
 #  - serving-qwen31-cpp.yaml
 #  - serving-qwen25-cpp.yaml
 #  - serving-granite-vision32-vllm.yaml
