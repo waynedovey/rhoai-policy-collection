@@ -5,7 +5,7 @@ metadata:
   name: time-slicing-config
   namespace: nvidia-gpu-operator
 data:
-    NVIDIA-L4: |-  # this must match node label nvidia.com/gpu.product=NVIDIA-L4
+    NVIDIA-L4: |-  # this must match node labels nvidia.com/gpu.product=NVIDIA-L4 and nvidia.com/device-plugin.config=NVIDIA-L4
       version: v1
       flags:
         migStrategy: none
