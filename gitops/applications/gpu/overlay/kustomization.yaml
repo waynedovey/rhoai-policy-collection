@@ -1,5 +1,5 @@
 ---
-resource:
+resources:
   - policy-gpu-node-label.yaml
 
 generators:
