@@ -1,6 +1,7 @@
 ---
 resources:
   - ../../base
+  - policy-gpu-node-label.yaml
 
 patches:
   - path: configmap.yaml
