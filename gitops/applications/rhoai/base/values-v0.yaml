@@ -29,15 +29,14 @@ operators:
   # tekton pipelines
   - name: openshift-pipelines-operator-rh
     namespace:
-      name: openshift-pipelines
-      create: true
-      global: true
+      name: openshift-operators
+      create: false
     channels: [latest] # v0,1
     version: "1.18.1" # v1
     catalog: openshift-redhat-operators #v1
     source: redhat-operators # v0
     sourceNamespace: openshift-marketplace # v0
-    enabled: false
+    enabled: true
 
   # serverless
   - name: serverless-operator
@@ -62,4 +61,4 @@ operators:
     catalog: openshift-redhat-operators #v1
     source: redhat-operators # v0
     sourceNamespace: openshift-marketplace # v0
-    enabled: false
+    enabled: true
