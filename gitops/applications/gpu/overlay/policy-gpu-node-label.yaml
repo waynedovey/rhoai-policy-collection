@@ -137,3 +137,17 @@ spec:
                             path: /
                             type: Directory
                           name: host
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: gpu-node-label
+  namespace: openshift-gitops
+placementRef:
+  apiGroup: cluster.open-cluster-management.io
+  kind: Placement
+  name: placement-hub-openshift
+subjects:
+  - apiGroup: policy.open-cluster-management.io
+    kind: Policy
+    name: gpu-node-label
