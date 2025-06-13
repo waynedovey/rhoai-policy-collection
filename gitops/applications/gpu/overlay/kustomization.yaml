@@ -1,3 +1,6 @@
 ---
+resource:
+  - policy-gpu-node-label.yaml
+
 generators:
   - policy-generator-config.yaml
