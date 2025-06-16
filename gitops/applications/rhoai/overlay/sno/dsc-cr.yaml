@@ -35,7 +35,7 @@ spec:
       managementState: Managed
     trainingoperator:
       managementState: Managed
-    # trustyai:
-    #   managementState: Managed
+    trustyai:
+      managementState: Managed
     workbenches:
       managementState: Managed
