@@ -52,12 +52,6 @@ Install Extra AWS Storage
 ./gitops/bootstrap/storage.sh
 ```
 
-Setup Vault Auth for ArgoCD
-
-```bash
-./gitops/bootstrap/vault-setup.sh
-```
-
 ## Setup app-of-apps storage
 
 With only `storage.yaml` in the app-of-apps folder:
@@ -78,6 +72,12 @@ This uses the default storage we setup for LVM
 ## Vault Secrets
 
 Install `vault.yaml` in the app-of-apps folder.
+
+Setup Vault Auth for ArgoCD
+
+```bash
+./gitops/bootstrap/vault-setup.sh
+```
 
 ## Installs Policy Collection for RHOAI
 
