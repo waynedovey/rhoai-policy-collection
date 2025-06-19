@@ -15,7 +15,7 @@ resources:
 #  - serving-granite-8b-lab-v2-vllm-oci.yaml
 #  - serving-deepseek-qwen3-cpp-oci.yaml
 #  - serving-deepseek-qwen3-vllm-oci.yaml
-##  - serving-deepseek-qwen3-vllm-oci-2.yaml
+  - serving-deepseek-qwen3-vllm-oci-2.yaml
 #  - serving-qwen31-cpp.yaml
 #  - serving-qwen25-cpp.yaml
 #  - serving-granite-vision32-vllm.yaml
