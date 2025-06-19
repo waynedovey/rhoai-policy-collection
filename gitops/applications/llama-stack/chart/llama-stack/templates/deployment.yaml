@@ -77,7 +77,7 @@ spec:
             - name: QWEN_MODEL
               value: "/mnt/models/Qwen3-1.7B-Q8_0.gguf"
             - name: DEEPSEEK_URL
-              value: "http://sno-deepseek-qwen3.llama-serving.svc.cluster.local/v1"
+              value: "http://sno-deepseek-qwen3-vllm-predictor.llama-serving.svc.cluster.local:8080/v1"
             - name: DEEPSEEK_MODEL
               value: "deepseek-r1-0528-qwen3-8b-bnb-4bit"
             - name: CUSTOM_TIKTOKEN_CACHE_DIR
