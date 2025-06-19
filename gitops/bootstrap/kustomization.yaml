@@ -1,6 +1,6 @@
 ---
 helmGlobals:
-  chartHome: ../
+  chartHome: ../chartHome
 
 helmCharts:
   - name: olm-v0-chart

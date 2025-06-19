@@ -5,7 +5,7 @@ resources:
   - gpu-cluster-policy.yaml
 
 helmGlobals:
-  chartHome: ../../../
+  chartHome: ../../olm
 
 helmCharts:
   - name: olm-v0-chart
