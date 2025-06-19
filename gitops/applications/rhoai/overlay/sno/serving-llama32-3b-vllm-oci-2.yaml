@@ -31,7 +31,8 @@ spec:
     - --model=/mnt/models
     - --port=8080
     - --max-model-len=8192
-    - --gpu_memory_utilization=0.39
+    - --gpu_memory_utilization=0.40
+    - --enforce-eager
     - --served-model-name=llama3-2-3b
     - --chat-template=/app/data/template/tool_chat_template_llama3.2_json.jinja
     - --enable-auto-tool-choice
