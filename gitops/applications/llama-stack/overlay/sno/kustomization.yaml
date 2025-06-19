@@ -1,5 +1,6 @@
 ---
-namespace: observability-hub
+namespace: agent-demo
 
 resources:
+  - namespace.yaml
   - ../../base
