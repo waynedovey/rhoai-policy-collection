@@ -126,7 +126,7 @@ data:
     models:
     - metadata: {}
       model_id: ${env.LLAMA3B_MODEL}
-      provider_id: vllm-inference
+      provider_id: llama-3b
       model_type: llm
     - metadata: {}
       model_id: ${env.DEEPSEEK_MODEL}
