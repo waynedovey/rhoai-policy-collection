@@ -65,7 +65,7 @@ spec:
             - name: LLAMA3B_URL
               value: "http://llama3-2-3b-predictor.observability-hub.svc.cluster.local:8080/v1"
             - name: LLAMA3B_MODEL
-              value: "llama32-3b"
+              value: "llama3-2-3b"
             - name: VLLM_API_TOKEN
               value: "fake"
             - name: GRANITE_URL
