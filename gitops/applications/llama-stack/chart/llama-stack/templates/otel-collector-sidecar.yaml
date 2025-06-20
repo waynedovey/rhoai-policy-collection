@@ -11,7 +11,7 @@ metadata:
 spec:
   observability:
     metrics: 
-      {{- toYaml .Values.otelCollector.observability.metrics | nindent 6 | quote }}
+      address: {{ .Values.otelCollector.observability.metrics.address | default "0.0.0.0:8888" | quote }}
   deploymentUpdateStrategy: 
     {{- toYaml .Values.otelCollector.deploymentUpdateStrategy | nindent 4 }}
   config:
