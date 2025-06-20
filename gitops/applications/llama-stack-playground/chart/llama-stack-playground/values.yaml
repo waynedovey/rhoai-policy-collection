@@ -46,7 +46,7 @@ route:
   host: ""
   tls:
     enabled: true
-    termination: edge
+    termination: reencrypt
     insecureEdgeTerminationPolicy: Redirect
 
 ingress:
