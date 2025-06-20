@@ -15,7 +15,7 @@ spec:
   {{- end }}
   to:
     kind: Service
-    name: proxy
+    name: llama-stack-playground
     weight: 100
   port:
     targetPort: http
