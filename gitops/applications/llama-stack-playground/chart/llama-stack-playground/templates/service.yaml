@@ -11,9 +11,8 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+    - name: proxy
+      port: 443
+      targetPort: 8443
   selector:
     {{- include "llama-stack-playground.selectorLabels" . | nindent 4 }}
