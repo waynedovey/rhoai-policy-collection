@@ -16,10 +16,9 @@ spec:
   to:
     kind: Service
     name: llama-stack-playground
-    port: proxy
     weight: 100
   port:
-    targetPort: http
+    targetPort: proxy
   {{- if .Values.route.tls.enabled }}
   tls:
     termination: {{ .Values.route.tls.termination }}
