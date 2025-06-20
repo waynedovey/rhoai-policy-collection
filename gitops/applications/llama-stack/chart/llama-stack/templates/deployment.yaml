@@ -81,13 +81,13 @@ spec:
             - name: DEEPSEEK_MODEL
               value: "deepseek-r1-0528-qwen3-8b-bnb-4bit"
             - name: CUSTOM_TIKTOKEN_CACHE_DIR
-              value: "/app/cache"
+              value: /app/cache
             - name: MILVUS_DB_PATH
-              value: "milvus.db"
+              value: milvus.db
             - name: LLAMA_STACK_LOGGING
               value: all=debug
             - name: LLAMA_STACK_PORT
-              value: "8321"
+              value: 8321
             {{- if .Values.otelCollector.enabled }}
             - name: OTEL_SERVICE_NAME
               value: llamastack
