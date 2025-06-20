@@ -107,6 +107,23 @@ llamaStack:
     size: 5Gi
     # storageClass:
 
+# Optional Tool Runtimes and Groups
+toolRuntimes:
+  - provider_id: tavily-search
+    provider_type: remote::tavily-search
+    config:
+      api_key: ${env.TAVILY_SEARCH_API_KEY:}
+      max_results: 3
+  # - provider_id: wolfram-alpha
+  #   provider_type: remote::wolfram-alpha
+  #   config:
+  #     api_key: ${env.WOLFRAM_ALPHA_API_KEY:}
+toolGroups:
+  - toolgroup_id: builtin::websearch
+    provider_id: tavily-search
+  # - toolgroup_id: builtin::wolfram_alpha
+  #   provider_id: wolfram-alpha
+
 # MCP servers configuration
 mcpServers:
   - name: "weather"

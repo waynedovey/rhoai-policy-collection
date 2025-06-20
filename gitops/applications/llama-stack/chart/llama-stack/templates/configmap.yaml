@@ -102,21 +102,15 @@ data:
           otel_trace_endpoint: ${env.OTEL_TRACE_ENDPOINT:}
           sqlite_db_path: ${env.SQLITE_DB_PATH:~/.llama/distributions/remote-vllm/trace_store.db}
       tool_runtime:
-      - provider_id: tavily-search
-        provider_type: remote::tavily-search
-        config:
-          api_key: ${env.TAVILY_SEARCH_API_KEY:}
-          max_results: 3
       - provider_id: rag-runtime
         provider_type: inline::rag-runtime
         config: {}
       - provider_id: model-context-protocol
         provider_type: remote::model-context-protocol
         config: {}
-      - provider_id: wolfram-alpha
-        provider_type: remote::wolfram-alpha
-        config:
-          api_key: ${env.WOLFRAM_ALPHA_API_KEY:}
+      {{- with .Values.toolRuntimes }}
+        {{- toYaml . | nindent 6 }}
+      {{- end }}
     metadata_store:
       type: sqlite
       db_path: ${env.SQLITE_STORE_DIR:~/.llama/distributions/remote-vllm}/registry.db
@@ -143,12 +137,11 @@ data:
     scoring_fns: []
     benchmarks: []
     tool_groups:
-    - toolgroup_id: builtin::websearch
-      provider_id: tavily-search
+    {{- with .Values.toolGroups }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
     - toolgroup_id: builtin::rag
       provider_id: rag-runtime
-    - toolgroup_id: builtin::wolfram_alpha
-      provider_id: wolfram-alpha
     {{- range .Values.mcpServers }}
     - toolgroup_id: mcp::{{ .name }}
       provider_id: model-context-protocol
