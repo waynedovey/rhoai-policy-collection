@@ -18,7 +18,7 @@ vault auth enable -path=$CLUSTER_DOMAIN-${PROJECT_NAME} kubernetes
 export MOUNT_ACCESSOR=$(vault auth list -format=json | jq -r ".\"$CLUSTER_DOMAIN-$PROJECT_NAME/\".accessor")
 
 vault policy write $CLUSTER_DOMAIN-$PROJECT_NAME-kv-read -<< EOF
-path "kv/data/{{identity.entity.aliases.$MOUNT_ACCESSOR.metadata.service_account_namespace}}/*" {
+path "kv/data/ocp/sno/{{identity.entity.aliases.$MOUNT_ACCESSOR.metadata.service_account_namespace}}/*" {
 capabilities=["read","list"]
 }
 EOF
