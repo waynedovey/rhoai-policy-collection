@@ -31,10 +31,10 @@ data:
       - provider_id: deepseek
         provider_type: remote::vllm
         config:
-            url: ${env.DEEPSEEK_URL:http://localhost:8000/v1}
-            max_tokens: max_tokens: ${env.LLAMA3B_TOKENS:15000}
-            api_token: ${env.DEEPSEEK_API_TOKEN:fake}
-            tls_verify: ${env.DEEPSEEK_TLS_VERIFY:false}
+          url: ${env.DEEPSEEK_URL:http://localhost:8000/v1}
+          max_tokens: max_tokens: ${env.DEEPSEEK_TOKENS:15000}
+          api_token: ${env.DEEPSEEK_API_TOKEN:fake}
+          tls_verify: ${env.DEEPSEEK_TLS_VERIFY:false}
       - provider_id: sentence-transformers
         provider_type: inline::sentence-transformers
         config: {}
