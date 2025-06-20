@@ -33,7 +33,7 @@ spec:
               key: token
         resources:
           limits:
-            cpu: "500m"
+            # cpu: "500m"
             memory: "512Mi"
           requests:
             cpu: "200m"
