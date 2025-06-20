@@ -85,7 +85,7 @@ spec:
             - name: MILVUS_DB_PATH
               value: "milvus.db"
             - name: LLAMA_STACK_LOGGING
-              value: "all=debug"
+              value: all=debug
             - name: LLAMA_STACK_PORT
               value: "8321"
             {{- if .Values.otelCollector.enabled }}
