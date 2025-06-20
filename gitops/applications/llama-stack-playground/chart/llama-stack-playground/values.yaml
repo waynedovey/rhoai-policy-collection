@@ -37,7 +37,8 @@ service:
   type: ClusterIP
   port: 80
   targetPort: 8501
-  annotations: {}
+  annotations:
+    service.alpha.openshift.io/serving-cert-secret-name: proxy-tls
 
 route:
   enabled: true
