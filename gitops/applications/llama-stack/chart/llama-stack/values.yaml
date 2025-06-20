@@ -113,7 +113,7 @@ mcpServers:
     uri: "http://mcp-weather:80/sse"
     description: "Weather MCP Server for real-time weather data"
   - name: "openshift"
-    uri: "http://ocp-mcp-server:80"
+    uri: "http://ocp-mcp-server:8000"
     description: "OpenShift MCP Server for local cluster"
   - name: "github"
     uri: "http://github-mcp-server-with-rh-nodejs:80/sse"
