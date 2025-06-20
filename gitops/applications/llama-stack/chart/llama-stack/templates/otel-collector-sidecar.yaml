@@ -10,8 +10,7 @@ metadata:
     {{- include "llama-stack.labels" . | nindent 4 }}
 spec:
   observability:
-    metrics: 
-      address: {{ .Values.otelCollector.observability.metrics.address | default "0.0.0.0:8888" | quote }}
+    metrics: {}
   deploymentUpdateStrategy: 
     {{- toYaml .Values.otelCollector.deploymentUpdateStrategy | nindent 4 }}
   config:
