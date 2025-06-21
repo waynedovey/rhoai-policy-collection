@@ -6,7 +6,7 @@ image:
   # repository: llamastack/distribution-remote-vllm
   # tag: "latest"
   # redhat-et image with vLLM support
-  repository: quay.io/redhat-et/llama
+  repository: quay.io/eformat/llama-stack  # quay.io/redhat-et/llama
   tag: "vllm-0.2.6"
   pullPolicy: IfNotPresent
 
