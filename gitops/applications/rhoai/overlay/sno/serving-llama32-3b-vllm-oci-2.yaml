@@ -30,7 +30,7 @@ spec:
   - args:
     - --model=/mnt/models
     - --port=8080
-    - --max-model-len=20000
+    - --max-model-len=15000
     - --gpu_memory_utilization=0.50
     - --enforce-eager
     - --served-model-name=llama3-2-3b
