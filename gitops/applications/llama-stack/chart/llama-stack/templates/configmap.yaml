@@ -25,14 +25,14 @@ data:
         provider_type: remote::vllm
         config:
           url: ${env.LLAMA3B_URL:http://localhost:8000/v1}
-          max_tokens: ${env.LLAMA3B_TOKENS:13000}
+          max_tokens: ${env.LLAMA3B_TOKENS:10000}
           api_token: ${env.LLAMA3B_API_TOKEN:fake}
           tls_verify: ${env.LLAMA3B_TLS_VERIFY:false}
       - provider_id: deepseek
         provider_type: remote::vllm
         config:
           url: ${env.DEEPSEEK_URL:http://localhost:8000/v1}
-          max_tokens: ${env.DEEPSEEK_TOKENS:13000}
+          max_tokens: ${env.DEEPSEEK_TOKENS:10000}
           api_token: ${env.DEEPSEEK_API_TOKEN:fake}
           tls_verify: ${env.DEEPSEEK_TLS_VERIFY:false}
       - provider_id: sentence-transformers
