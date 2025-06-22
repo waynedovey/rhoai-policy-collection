@@ -6,7 +6,6 @@ readonly ORANGE='\033[38;5;214m'
 readonly NC='\033[0m' # No Color
 readonly RUN_DIR=$(pwd)
 
-DRYRUN=${DRYRUN:-}
 EXTRA_DISK_SIZE=${EXTRA_DISK_SIZE:-300}
 
 setup_extra_storage() {
@@ -52,11 +51,6 @@ setup_extra_storage() {
 }
 
 storage_class() {
-    if [ -z "$DRYRUN" ]; then
-        echo -e "${GREEN}Ignoring - storage_class - dry run set${NC}"
-        return
-    fi
-
     echo "🌴 Running storage_class..."
 
     local i=0
