@@ -1,0 +1,153 @@
+#!/bin/bash
+set -o pipefail
+
+readonly RED='\033[0;31m'
+readonly GREEN='\033[0;32m'
+readonly ORANGE='\033[38;5;214m'
+readonly NC='\033[0m' # No Color
+readonly RUN_DIR=$(pwd)
+
+ENVIRONMENT=${ENVIRONMENT:-sno}
+DRYRUN=${DRYRUN:-}
+BASE_DOMAIN=${BASE_DOMAIN:-}
+CLUSTER_NAME=${CLUSTER_NAME:-}
+
+wait_for_openshift_api() {
+    local i=0
+    HOST=https://api.${CLUSTER_NAME}.${BASE_DOMAIN}:6443/healthz
+    until [ $(curl -k -s -o /dev/null -w %{http_code} ${HOST}) = "200" ]
+    do
+        echo -e "${GREEN}Waiting for 200 response from openshift api ${HOST}.${NC}"
+        sleep 5
+        ((i=i+1))
+        if [ $i -gt 100 ]; then
+            echo -e "🕱${RED}Failed - OpenShift api ${HOST} never ready?.${NC}"
+            exit 1
+        fi
+    done
+    echo "🌴 wait_for_openshift_api ran OK"
+}
+
+wait_for_project() {
+    local i=0
+    local project="$1"
+    STATUS=$(oc get project $project -o=go-template --template='{{ .status.phase }}')
+    until [ "$STATUS" == "Active" ]
+    do
+        echo -e "${GREEN}Waiting for project $project.${NC}"
+        sleep 5
+        ((i=i+1))
+        if [ $i -gt 200 ]; then
+            echo -e "🚨${RED}Failed waiting for project $project never Succeeded?.${NC}"
+            exit 1
+        fi
+        STATUS=$(oc get project $project -o=go-template --template='{{ .status.phase }}')
+    done
+}
+
+wait_for_mcp() {
+    local i=0
+    STATUS=$(oc get mcp master -o=jsonpath='{.status.conditions[?(@.type=="Updating")].status}')
+    until [ "$STATUS" == "False" ]
+    do
+        echo -e "${GREEN}Waiting for mcp to rollout.${NC}"
+        sleep 5
+        ((i=i+1))
+        if [ $i -gt 300 ]; then
+            echo -e "🚨${RED}Failed waiting for mcp to rollout - never Succeeded?.${NC}"
+            exit 1
+        fi
+        STATUS=$(oc get mcp master -o=jsonpath='{.status.conditions[?(@.type=="Updating")].status}')
+    done
+}
+
+wait_for_machine_config() {
+    local i=0
+    oc get mc 99-kubens-master 2>&1>/dev/null
+    until [ "$?" == 0 ]
+    do
+        echo -e "${GREEN}Waiting for MachineConfig to be applied.${NC}"
+        sleep 5
+        ((i=i+1))
+        if [ $i -gt 300 ]; then
+            echo -e "🕱${RED}Failed - MachineConfig 99-kubens-master never found?.${NC}"
+            exit 1
+        fi
+        oc get mc 99-kubens-master 2>&1>/dev/null
+    done
+    echo "🌴 wait_for_machine_config ran OK"
+}
+
+app_of_apps() {
+    if [ -z "$DRYRUN" ]; then
+        echo -e "${GREEN}Ignoring - app_of_apps - dry run set${NC}"
+        return
+    fi
+
+    echo "🌴 Running app_of_apps..."
+
+    oc apply -f gitops/app-of-apps/${ENVIRONMENT}-app-of-apps.yaml
+
+    wait_for_machine_config
+
+    echo "🌴 app_of_apps ran OK"
+}
+
+bootstrap() {
+    cd ${WORK_DIR} && git clone https://github.com/eformat/rhoai-policy-collection.git
+    cd ${WORK_DIR}/rhoai-policy-collection
+    echo "💥 Working directory is: $(pwd)" | tee -a output.log
+    cat gitops/applications/rag/base/console-links.yaml | envsubst | oc apply -f-
+}
+
+all() {
+    echo "🌴 ENVIRONMENT set to $ENVIRONMENT"
+    echo "🌴 BASE_DOMAIN set to $BASE_DOMAIN"
+    echo "🌴 CLUSTER_NAME set to $CLUSTER_NAME"
+    echo "🌴 KUBECONFIG set to $KUBECONFIG"
+
+    wait_for_openshift_api
+    bootstrap
+    app_of_apps
+    wait_for_mcp
+    wait_for_project agent-demo
+}
+
+while getopts db:c:e:k: opts; do
+  case $opts in
+    b)
+      BASE_DOMAIN=$OPTARG
+      ;;
+    c)
+      CLUSTER_NAME=$OPTARG
+      ;;
+    d)
+      DRYRUN="--no-dry-run"
+      ;;
+    e)
+      ENVIRONMENT=$OPTARG
+      ;;
+    k)
+      KUBECONFIG=$OPTARG
+      ;;
+    *)
+      usage
+      ;;
+  esac
+done
+
+shift `expr $OPTIND - 1`
+
+# Check for EnvVars
+[ -z "$BASE_DOMAIN" ] && echo "🕱 Error: must supply BASE_DOMAIN in env or cli" && exit 1
+[ -z "$CLUSTER_NAME" ] && echo "🕱 Error: must supply CLUSTER_NAME in env or cli" && exit 1
+[ -z "$ENVIRONMENT" ] && echo "🕱 Error: must supply ENVIRONMENT in env or cli" && exit 1
+[ -z "$KUBECONFIG" ] && [ -z "KUBECONFIG" ] && echo "🕱 Error: KUBECONFIG not set in env or cli" && exit 1
+[ -z "$AWS_PROFILE" ] && [ -z "$AWS_ACCESS_KEY_ID" ] && echo "🕱 Error: AWS_ACCESS_KEY_ID not set in env" && exit 1
+[ -z "$AWS_PROFILE" ] && [ -z "$AWS_SECRET_ACCESS_KEY" ] && echo "🕱 Error: AWS_SECRET_ACCESS_KEY not set in env" && exit 1
+[ -z "$AWS_PROFILE" ] && [ -z "$AWS_DEFAULT_REGION" ] && echo "🕱 Error: AWS_DEFAULT_REGION not set in env" && exit
+
+all
+
+echo -e "\n🌻${GREEN}Apps deployed OK.${NC}🌻\n"
+exit 0
