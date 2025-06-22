@@ -37,6 +37,43 @@ spec:
         object-templates:
         - complianceType: musthave
           objectDefinition:
+            apiVersion: v1
+            kind: Namespace
+            metadata:
+              name: openshift-storage
+        pruneObjectBehavior: None
+        remediationAction: enforce
+        severity: medium
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: ConfigurationPolicy
+      metadata:
+        name: storage2
+      spec:
+        object-templates:
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: operators.coreos.com/v1
+            kind: OperatorGroup
+            metadata:
+              name: lvms-operator-og
+              namespace: openshift-storage
+            spec:
+              targetNamespaces:
+              - openshift-storage
+              upgradeStrategy: Default
+        pruneObjectBehavior: None
+        remediationAction: enforce
+        severity: medium
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: ConfigurationPolicy
+      metadata:
+        name: storage3
+      spec:
+        object-templates:
+        - complianceType: musthave
+          objectDefinition:
             apiVersion: operators.coreos.com/v1alpha1
             kind: Subscription
             metadata:
@@ -55,7 +92,7 @@ spec:
       apiVersion: policy.open-cluster-management.io/v1
       kind: ConfigurationPolicy
       metadata:
-        name: storage2
+        name: storage4
       spec:
         object-templates:
         - complianceType: musthave
