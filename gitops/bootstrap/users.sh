@@ -76,9 +76,23 @@ EOF
     echo "🌴 configure_oauth ran OK"
 }
 
+check_done() {
+    echo "🌴 Running check_done..."
+    ID=$(oc get oauth.config.openshift.io cluster -o=jsonpath={.spec.identityProviders[].type})
+    if [ "$ID" != "HTPasswd" ]; then
+      echo -e "💀${ORANGE}Warn - check_done not ready for users, continuing ${NC}"
+      return 1
+    else
+      echo "🌴 users ran OK"
+    fi
+    return 0
+}
+
 all() {
     echo "🌴 BASE_DOMAIN set to $BASE_DOMAIN"
     echo "🌴 NO_ADMINS set to $NO_ADMINS"
+
+    if check_done; then return; fi
 
     create_htpasswd
     add_cluster_admins
