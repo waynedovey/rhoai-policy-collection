@@ -93,13 +93,6 @@ app_of_apps() {
     echo "🌴 app_of_apps ran OK"
 }
 
-bootstrap() {
-    cd ${WORK_DIR} && git clone https://github.com/eformat/rhoai-policy-collection.git
-    cd ${WORK_DIR}/rhoai-policy-collection
-    echo "💥 Working directory is: $(pwd)" | tee -a output.log
-    cat console-links.yaml | envsubst | oc apply -f-
-}
-
 all() {
     echo "🌴 ENVIRONMENT set to $ENVIRONMENT"
     echo "🌴 BASE_DOMAIN set to $BASE_DOMAIN"
@@ -107,7 +100,6 @@ all() {
     echo "🌴 KUBECONFIG set to $KUBECONFIG"
 
     wait_for_openshift_api
-    bootstrap
     app_of_apps
     wait_for_mcp
     wait_for_project agent-demo
