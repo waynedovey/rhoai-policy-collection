@@ -80,6 +80,18 @@ storage_policy() {
     oc apply -f gitops/bootstrap/storage.yaml
 }
 
+check_done() {
+    echo "🌴 Running check_done..."
+    oc get sc/lvms-vgsno
+    if [ "$?" != 0 ]; then
+      echo -e "💀${ORANGE}Warn - check_done not ready for storage, continuing ${NC}"
+      return 1
+    else
+      echo "🌴 check_done ran OK"
+    fi
+    return 0
+}
+
 usage() {
   cat <<EOF 2>&1
 usage: $0 [ -d ]
@@ -89,8 +101,9 @@ EOF
   exit 1
 }
 
-
 all() {
+    if check_done; then return; fi
+
     setup_extra_storage
     storage_policy
     storage_class

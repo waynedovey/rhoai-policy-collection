@@ -83,7 +83,7 @@ check_done() {
       echo -e "💀${ORANGE}Warn - check_done not ready for users, continuing ${NC}"
       return 1
     else
-      echo "🌴 users ran OK"
+      echo "🌴 check_done ran OK"
     fi
     return 0
 }
