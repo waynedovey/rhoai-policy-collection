@@ -11,6 +11,6 @@ helmCharts:
 #      vault:
 #        server:
 #          route:
-#            host: vault.apps.sno.sandbox2556.opentlc.com
+#            host: vault.apps.sno.${BASE_DOMAIN}
 #          extraEnvironmentVars:
-#            VAULT_TLS_SERVER_NAME: vault.apps.sno.sandbox2556.opentlc.com
+#            VAULT_TLS_SERVER_NAME: vault.apps.sno.${BASE_DOMAIN}

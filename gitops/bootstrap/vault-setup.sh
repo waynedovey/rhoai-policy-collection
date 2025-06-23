@@ -3,7 +3,7 @@
 # setup secrets for gitops
 # https://eformat.github.io/rainforest-docs/#/2-platform-work/3-secrets
 
-export VAULT_ROUTE=vault.apps.sno.sandbox2556.opentlc.com
+export VAULT_ROUTE=vault.apps.sno.${BASE_DOMAIN}
 export VAULT_ADDR=https://${VAULT_ROUTE}
 export VAULT_SKIP_VERIFY=true
 
@@ -11,14 +11,14 @@ vault login token=${ROOT_TOKEN}
 
 export APP_NAME=vault
 export PROJECT_NAME=openshift-gitops
-export CLUSTER_DOMAIN=apps.sno.sandbox2556.opentlc.com
+export CLUSTER_DOMAIN=apps.sno.${BASE_DOMAIN}
 
 vault auth enable -path=$CLUSTER_DOMAIN-${PROJECT_NAME} kubernetes
 
 export MOUNT_ACCESSOR=$(vault auth list -format=json | jq -r ".\"$CLUSTER_DOMAIN-$PROJECT_NAME/\".accessor")
 
 vault policy write $CLUSTER_DOMAIN-$PROJECT_NAME-kv-read -<< EOF
-path "kv/data/ocp/sno/{{identity.entity.aliases.$MOUNT_ACCESSOR.metadata.service_account_namespace}}/*" {
+path "kv/data/ocp/sno/*" {
 capabilities=["read","list"]
 }
 EOF
