@@ -13,6 +13,6 @@ spec:
     name: int-ca-issuer
     kind: Issuer
   dnsNames:
-    - vault.apps.{{ (lookup "config.openshift.io/v1" "DNS" "" "cluster").spec.baseDomain }}
+    - {{ printf "vault.apps.{{ (lookup "config.openshift.io/v1" "DNS" "" "cluster").spec.baseDomain }}" }}
     - vault-active.{{ .Release.Namespace }}.svc
     - vault-internal.{{ .Release.Namespace }}.svc
