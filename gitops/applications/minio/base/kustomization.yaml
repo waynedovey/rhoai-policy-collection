@@ -4,4 +4,4 @@ resources:
   - minio-pvc.yaml
   - minio-dc.yaml
   - minio-service.yaml
-  #- minio-job.yaml
+  - minio-job.yaml
