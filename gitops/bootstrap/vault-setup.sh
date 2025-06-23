@@ -1,18 +1,37 @@
 #!/bin/bash
 
+readonly RED='\033[0;31m'
+readonly GREEN='\033[0;32m'
+readonly ORANGE='\033[38;5;214m'
+readonly NC='\033[0m' # No Color
+
 # setup secrets for gitops
 # https://eformat.github.io/rainforest-docs/#/2-platform-work/3-secrets
 
-#oc -n vault exec -ti vault-0 -- vault operator init -key-threshold=1 -key-shares=1 -tls-skip-verify
-#export UNSEAL_KEY=
-#export ROOT_TOKEN=
-#oc -n vault exec -ti vault-0 -- vault operator unseal -tls-skip-verify $UNSEAL_KEY
+oc -n vault exec -ti vault-0 -- vault operator init -key-threshold=1 -key-shares=1 -tls-skip-verify 2>&1 | tee /tmp/vault-init
+if [ "$?" != 0 ]; then
+    echo -e "🕱${RED}Failed - to run initialize vault ?${NC}"
+    exit 1
+fi
+
+export UNSEAL_KEY=$(cat /tmp/vault-init | grep -e 'Unseal Key 1' | awk '{print $4}')
+export ROOT_TOKEN=$(cat /tmp/vault-init | grep -e 'Initial Root Token' | awk '{print $4}')
+
+oc -n vault exec -ti vault-0 -- vault operator unseal -tls-skip-verify $UNSEAL_KEY
+if [ "$?" != 0 ]; then
+    echo -e "🕱${RED}Failed - to unseal vault ?${NC}"
+    exit 1
+fi
 
 export VAULT_ROUTE=vault-vault.apps.sno.${BASE_DOMAIN}
 export VAULT_ADDR=https://${VAULT_ROUTE}
 export VAULT_SKIP_VERIFY=true
 
 vault login token=${ROOT_TOKEN}
+if [ "$?" != 0 ]; then
+    echo -e "🕱${RED}Failed - to login to vault ?${NC}"
+    exit 1
+fi
 
 export APP_NAME=vault
 export PROJECT_NAME=openshift-gitops
@@ -41,3 +60,6 @@ CA_CRT=$(openssl s_client -showcerts -connect api.sno.${BASE_DOMAIN}:6443 2>&1 |
 vault write auth/$CLUSTER_DOMAIN-${PROJECT_NAME}/config \
 kubernetes_host="$(oc whoami --show-server)" \
 kubernetes_ca_cert="$CA_CRT"
+
+echo -e "\n🌻${GREEN}Vault setup OK.${NC}🌻\n"
+exit 0
