@@ -22,7 +22,7 @@ vault:
       host:
     extraEnvironmentVars:
       VAULT_CACERT: "/etc/vault-tls/vault-certs/ca.crt"
-      VAULT_TLS_SERVER_NAME: {{ printf "vault.apps.{{ (lookup "config.openshift.io/v1" "DNS" "" "cluster").spec.baseDomain }}" }}
+      VAULT_TLS_SERVER_NAME:
     standalone:
       enabled: true
       config: |
