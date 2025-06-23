@@ -63,7 +63,7 @@ spec:
             - name: VLLM_MAX_TOKENS
               value: "128000"
             - name: LLAMA3B_URL
-              value: "http://llama3-2-3b-predictor.observability-hub.svc.cluster.local:8080/v1"
+              value: "http://llama3-2-3b-predictor.llama-serving.svc.cluster.local:8080/v1"
             - name: LLAMA3B_MODEL
               value: "llama3-2-3b"
             - name: VLLM_API_TOKEN
