@@ -43,6 +43,7 @@ wait_for_project() {
         fi
         STATUS=$(oc get project $project -o=go-template --template='{{ .status.phase }}')
     done
+    echo "🌴 wait_for_project $project ran OK"
 }
 
 wait_for_mcp() {
@@ -59,6 +60,7 @@ wait_for_mcp() {
         fi
         STATUS=$(oc get mcp master -o=jsonpath='{.status.conditions[?(@.type=="Updating")].status}')
     done
+    echo "🌴 wait_for_mcp ran OK"
 }
 
 wait_for_machine_config() {
