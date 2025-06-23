@@ -1,6 +1,7 @@
 ---
 resources:
-#  - nfd-cr.yaml
+  - nfd-cr.yaml
+  - nfd-rbac-hack.yaml  # broken in 4.19.1
   - configmap.yaml
   - gpu-cluster-policy.yaml
 
