@@ -3,7 +3,12 @@
 # setup secrets for gitops
 # https://eformat.github.io/rainforest-docs/#/2-platform-work/3-secrets
 
-export VAULT_ROUTE=vault.apps.sno.${BASE_DOMAIN}
+#oc -n vault exec -ti vault-0 -- vault operator init -key-threshold=1 -key-shares=1 -tls-skip-verify
+#export UNSEAL_KEY=
+#export ROOT_TOKEN=
+#oc -n vault exec -ti vault-0 -- vault operator unseal -tls-skip-verify $UNSEAL_KEY
+
+export VAULT_ROUTE=vault-vault.apps.sno.${BASE_DOMAIN}
 export VAULT_ADDR=https://${VAULT_ROUTE}
 export VAULT_SKIP_VERIFY=true
 
@@ -31,5 +36,8 @@ bound_service_account_namespaces=$PROJECT_NAME \
 policies=$CLUSTER_DOMAIN-$PROJECT_NAME-kv-read \
 period=120s
 
+CA_CRT=$(openssl s_client -showcerts -connect api.sno.${BASE_DOMAIN}:6443 2>&1 | awk '/BEGIN CERTIFICATE/,/END CERTIFICATE/ {print $0}')
+
 vault write auth/$CLUSTER_DOMAIN-${PROJECT_NAME}/config \
-kubernetes_host="$(oc whoami --show-server)"
+kubernetes_host="$(oc whoami --show-server)" \
+kubernetes_ca_cert="$CA_CRT"
