@@ -36,6 +36,9 @@ operation:
       hook: {}
 '
     done
+    for x in mcp-github-local-cluster policy-collection-sno llama-stack-playground-local-cluster; do
+        oc -n openshift-gitops annotate applications.argoproj.io/$x argocd.argoproj.io/refresh="hard"
+    done
     echo "🌴 force_argocd_sync ran OK"
 }
 
