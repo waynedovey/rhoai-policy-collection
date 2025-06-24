@@ -8,11 +8,24 @@ readonly NC='\033[0m' # No Color
 # setup secrets for gitops
 # https://eformat.github.io/rainforest-docs/#/2-platform-work/3-secrets
 
-oc -n vault exec -ti vault-0 -- vault operator init -key-threshold=1 -key-shares=1 -tls-skip-verify 2>&1 | tee /tmp/vault-init
-if [ "$?" != 0 ]; then
-    echo -e "🕱${RED}Failed - to run initialize vault ?${NC}"
-    exit 1
-fi
+init () {
+    echo "💥 Init Vault..." | tee -a output.log
+    local i=0
+    oc -n vault exec -ti vault-0 -- vault operator init -key-threshold=1 -key-shares=1 -tls-skip-verify 2>&1 | tee /tmp/vault-init
+    until [ "$?" == 0 ]
+    do
+        echo -e "${GREEN}Waiting for 0 rc from oc commands.${NC}"
+        ((i=i+1))
+        if [ $i -gt 100 ]; then
+            echo -e "🕱${RED}Failed - oc login never ready?.${NC}"
+            exit 1
+        fi
+        sleep 10
+        oc -n vault exec -ti vault-0 -- vault operator init -key-threshold=1 -key-shares=1 -tls-skip-verify 2>&1 | tee /tmp/vault-init
+    done
+    echo "💥 Init Vault Done" | tee -a output.log
+}
+init
 
 export UNSEAL_KEY=$(cat /tmp/vault-init | grep -e 'Unseal Key 1' | awk '{print $4}')
 export ROOT_TOKEN=$(cat /tmp/vault-init | grep -e 'Initial Root Token' | awk '{print $4}')
