@@ -11,6 +11,23 @@ readonly NC='\033[0m' # No Color
 # use login
 export KUBECONFIG=~/.kube/config.${AWS_PROFILE}
 
+wait_for_openshift_api() {
+    local i=0
+    HOST=https://api.${CLUSTER_NAME}.${BASE_DOMAIN}:6443/healthz
+    until [ $(curl --connect-timeout 3 -k -s -o /dev/null -w %{http_code} ${HOST}) = "200" ]
+    do
+        echo -e "${GREEN}Waiting for 200 response from openshift api ${HOST}.${NC}"
+        sleep 5
+        ((i=i+1))
+        if [ $i -gt 100 ]; then
+            echo -e "🕱${RED}Failed - OpenShift api ${HOST} never ready?.${NC}"
+            exit 1
+        fi
+    done
+    echo "🌴 wait_for_openshift_api ran OK"
+}
+wait_for_openshift_api
+
 login () {
     echo "💥 Login to OpenShift..." | tee -a output.log
     local i=0

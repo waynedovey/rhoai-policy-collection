@@ -1,9 +1,26 @@
 #!/bin/bash
+set -o pipefail
 
 readonly RED='\033[0;31m'
 readonly GREEN='\033[0;32m'
 readonly ORANGE='\033[38;5;214m'
 readonly NC='\033[0m' # No Color
+
+wait_for_openshift_api() {
+    local i=0
+    HOST=https://api.${CLUSTER_NAME}.${BASE_DOMAIN}:6443/healthz
+    until [ $(curl --connect-timeout 3 -k -s -o /dev/null -w %{http_code} ${HOST}) = "200" ]
+    do
+        echo -e "${GREEN}Waiting for 200 response from openshift api ${HOST}.${NC}"
+        sleep 5
+        ((i=i+1))
+        if [ $i -gt 100 ]; then
+            echo -e "🕱${RED}Failed - OpenShift api ${HOST} never ready?.${NC}"
+            exit 1
+        fi
+    done
+    echo "🌴 wait_for_openshift_api ran OK"
+}
 
 force_argocd_sync() {
     echo "🌴 Running force_argocd_sync..."
@@ -87,6 +104,11 @@ check_llm_pods() {
     echo "🌴 check_llm_pods $PODS ran OK"
 }
 
+echo "🌴 ENVIRONMENT set to $ENVIRONMENT"
+echo "🌴 BASE_DOMAIN set to $BASE_DOMAIN"
+echo "🌴 CLUSTER_NAME set to $CLUSTER_NAME"
+
+wait_for_openshift_api
 force_argocd_sync
 check_pods_allocatable
 check_gpus_allocatable
