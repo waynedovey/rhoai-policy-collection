@@ -20,7 +20,10 @@ check_done() {
     return 0
 }
 
-if check_done; then exit 0; fi
+if check_done; then
+    echo -e "\n🌻${GREEN}Vault setup OK.${NC}🌻\n"
+    exit 0;
+fi
 
 init () {
     echo "💥 Init Vault..." | tee -a output.log
