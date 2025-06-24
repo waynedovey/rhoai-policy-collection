@@ -262,7 +262,7 @@ wait_for_api_cert() {
     do
         echo -e "Wait for certificate api-cert to be ready."
         ((i=i+1))
-        if [ $i -gt 100 ]; then
+        if [ $i -gt 500 ]; then
             echo -e "🚨 Failed - certificate api-cert never ready?."
             exit 1
         fi
@@ -278,7 +278,7 @@ wait_for_ingress_cert() {
     do
         echo -e "Wait for certificate apps-cert to be ready."
         ((i=i+1))
-        if [ $i -gt 100 ]; then
+        if [ $i -gt 500 ]; then
             echo -e "🚨 Failed - certificate apps-cert never ready?."
             exit 1
         fi
