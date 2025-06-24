@@ -54,7 +54,18 @@ check_llm_pods() {
             exit 1
         fi
         sleep 10
-        GPUS=$(oc get $(oc get node -o name -l node-role.kubernetes.io/master=) -o=jsonpath={.status.allocatable.nvidia\\.com\\/gpu})
+        PODS=$(oc get pods -n llama-serving | grep -e Running | wc -l)
+        # this is because we need llama to start first before deepseek
+        # vllm gpu_memory_utilization is calc on "current available" not actual
+        # and we cannot predict who will start up first
+        if [ "$PODS" == 1 ]; then
+            DEEPSEEK_STATUS=$(oc -n llama-serving get $(oc get pods -n llama-serving -l app=isvc.sno-deepseek-qwen3-vllm-predictor -o name) -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}')
+            LLAMA_STATUS=$(oc -n llama-serving get $(oc get pods -n llama-serving -l app=isvc.llama3-2-3b-predictor -o name) -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}')
+            if [ "$DEEPSEEK_STATUS" == "True" && "$LLAMA_STATUS" != "True" ]; then
+                echo -e "${ORANGE}Killing deepseek pod so llama starts up first.${NC}"
+                oc -n llama-serving delete $(oc get pods -n llama-serving -l app=isvc.sno-deepseek-qwen3-vllm-predictor -o name)
+            fi
+        fi
     done
     echo "🌴 check_llm_pods $PODS ran OK"
 }
