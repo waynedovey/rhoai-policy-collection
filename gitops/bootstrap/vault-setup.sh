@@ -91,9 +91,9 @@ vault write auth/$CLUSTER_DOMAIN-${PROJECT_NAME}/config \
 kubernetes_host="$(oc whoami --show-server)" \
 kubernetes_ca_cert="$CA_CRT"
 
-ansible-vault decrypt ../../secrets/vault-sno --vault-password-file <(echo "$ANSIBLE_VAULT_SECRET")
-sh ../../secrets/vault-sno $ROOT_TOKEN
-ansible-vault encrypt ../../secrets/vault-sno --vault-password-file <(echo "$ANSIBLE_VAULT_SECRET")
+ansible-vault decrypt secrets/vault-sno --vault-password-file <(echo "$ANSIBLE_VAULT_SECRET")
+sh secrets/vault-sno $ROOT_TOKEN
+ansible-vault encrypt secrets/vault-sno --vault-password-file <(echo "$ANSIBLE_VAULT_SECRET")
 
 echo -e "\n🌻${GREEN}Vault setup OK.${NC}🌻\n"
 exit 0
