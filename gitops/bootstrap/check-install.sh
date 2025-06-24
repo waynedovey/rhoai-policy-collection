@@ -5,6 +5,23 @@ readonly GREEN='\033[0;32m'
 readonly ORANGE='\033[38;5;214m'
 readonly NC='\033[0m' # No Color
 
+force_argocd_sync() {
+    echo "🌴 Running force_argocd_sync..."
+
+    # these apps need vault secrets
+    for x in mcp-github-local-cluster policy-collection-sno llama-stack-playground-local-cluster; do
+    oc -n openshift-gitops patch applications.argoproj.io $x --type=merge --patch '
+operation:
+  initiatedBy:
+    username: admin
+  sync:
+    syncStrategy:
+      hook: {}
+'
+    done
+    echo "🌴 force_argocd_sync ran OK"
+}
+
 check_pods_allocatable() {
     echo "🌴 Running check_pods_allocatable..."
     local i=0
@@ -70,6 +87,7 @@ check_llm_pods() {
     echo "🌴 check_llm_pods $PODS ran OK"
 }
 
+force_argocd_sync
 check_pods_allocatable
 check_gpus_allocatable
 check_llm_pods

@@ -8,6 +8,28 @@ readonly NC='\033[0m' # No Color
 # setup secrets for gitops
 # https://eformat.github.io/rainforest-docs/#/2-platform-work/3-secrets
 
+# use login
+export KUBECONFIG=~/.kube/config.${AWS_PROFILE}
+
+login () {
+    echo "💥 Login to OpenShift..." | tee -a output.log
+    local i=0
+    oc login -u admin -p ${ADMIN_PASSWORD} --server=https://api.sno.${BASE_DOMAIN}:6443
+    until [ "$?" == 0 ]
+    do
+        echo -e "${GREEN}Waiting for 0 rc from oc commands.${NC}" 2>&1 | tee -a output.log
+        ((i=i+1))
+        if [ $i -gt 100 ]; then
+            echo -e "🕱${RED}Failed - oc login never ready?.${NC}" 2>&1 | tee -a output.log
+            exit 1
+        fi
+        sleep 10
+        oc login -u admin -p ${ADMIN_PASSWORD} --server=https://api.sno.${BASE_DOMAIN}:6443
+    done
+    echo "💥 Login to OpenShift Done" | tee -a output.log
+}
+login
+
 check_done() {
     echo "🌴 Running check_done..."
     STATUS=$(oc -n vault get $(oc get pods -n vault -l app.kubernetes.io/instance=vault -o name) -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}')
