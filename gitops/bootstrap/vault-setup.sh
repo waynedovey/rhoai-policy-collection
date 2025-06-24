@@ -11,7 +11,7 @@ readonly NC='\033[0m' # No Color
 init () {
     echo "💥 Init Vault..." | tee -a output.log
     local i=0
-    oc -n vault exec -ti vault-0 -- vault operator init -key-threshold=1 -key-shares=1 -tls-skip-verify 2>&1 | tee /tmp/vault-init
+    oc -n vault exec vault-0 -- vault operator init -key-threshold=1 -key-shares=1 -tls-skip-verify 2>&1 | tee /tmp/vault-init
     until [ "$?" == 0 ]
     do
         echo -e "${GREEN}Waiting for 0 rc from oc commands.${NC}"
@@ -21,7 +21,7 @@ init () {
             exit 1
         fi
         sleep 10
-        oc -n vault exec -ti vault-0 -- vault operator init -key-threshold=1 -key-shares=1 -tls-skip-verify 2>&1 | tee /tmp/vault-init
+        oc -n vault exec vault-0 -- vault operator init -key-threshold=1 -key-shares=1 -tls-skip-verify 2>&1 | tee /tmp/vault-init
     done
     echo "💥 Init Vault Done" | tee -a output.log
 }
@@ -30,7 +30,7 @@ init
 export UNSEAL_KEY=$(cat /tmp/vault-init | grep -e 'Unseal Key 1' | awk '{print $4}')
 export ROOT_TOKEN=$(cat /tmp/vault-init | grep -e 'Initial Root Token' | awk '{print $4}')
 
-oc -n vault exec -ti vault-0 -- vault operator unseal -tls-skip-verify $UNSEAL_KEY
+oc -n vault exec vault-0 -- vault operator unseal -tls-skip-verify $UNSEAL_KEY
 if [ "$?" != 0 ]; then
     echo -e "🕱${RED}Failed - to unseal vault ?${NC}"
     exit 1
