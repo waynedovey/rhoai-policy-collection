@@ -8,6 +8,20 @@ readonly NC='\033[0m' # No Color
 # setup secrets for gitops
 # https://eformat.github.io/rainforest-docs/#/2-platform-work/3-secrets
 
+check_done() {
+    echo "🌴 Running check_done..."
+    STATUS=$(oc -n vault get $(oc get pods -n vault -l app.kubernetes.io/instance=vault -o name) -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}')
+    if [ "$STATUS" != "True" ]; then
+      echo -e "💀${ORANGE}Warn - check_done not ready for vault, continuing ${NC}"
+      return 1
+    else
+      echo "🌴 check_done ran OK"
+    fi
+    return 0
+}
+
+if check_done; then exit 0; fi
+
 init () {
     echo "💥 Init Vault..." | tee -a output.log
     local i=0
