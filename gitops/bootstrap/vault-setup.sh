@@ -47,6 +47,26 @@ login () {
 }
 login
 
+wait_for_project() {
+    local i=0
+    local project="$1"
+    STATUS=$(oc get project $project -o=go-template --template='{{ .status.phase }}')
+    until [ "$STATUS" == "Active" ]
+    do
+        echo -e "${GREEN}Waiting for project $project.${NC}"
+        sleep 5
+        ((i=i+1))
+        if [ $i -gt 200 ]; then
+            echo -e "🚨${RED}Failed waiting for project $project never Succeeded?.${NC}"
+            exit 1
+        fi
+        STATUS=$(oc get project $project -o=go-template --template='{{ .status.phase }}')
+    done
+    echo "🌴 wait_for_project $project ran OK"
+}
+
+wait_for_project vault
+
 check_done() {
     echo "🌴 Running check_done..."
     STATUS=$(oc -n vault get $(oc get pods -n vault -l app.kubernetes.io/instance=vault -o name) -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}')
