@@ -121,7 +121,7 @@ metadata:
   namespace: openshift-config
 spec:
   acme:
-    server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory  # https://acme-v02.api.letsencrypt.org/directory
     email: "${EMAIL}"
     privateKeySecretRef:
       name: tls-secret
@@ -149,7 +149,7 @@ metadata:
   namespace: openshift-ingress
 spec:
   acme:
-    server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory  # https://acme-v02.api.letsencrypt.org/directory
     email: "${EMAIL}"
     privateKeySecretRef:
       name: tls-secret
