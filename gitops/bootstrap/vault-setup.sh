@@ -1,4 +1,5 @@
 #!/bin/bash
+set -o pipefail
 
 readonly RED='\033[0;31m'
 readonly GREEN='\033[0;32m'
@@ -69,8 +70,8 @@ wait_for_project vault
 wait_for_vault_pod () {
     echo "💥 Waiting for vault pod ..."
     local i=0
-    oc wait --for=condition=Ready pod -l app.kubernetes.io/instance=vault -n vault --timeout=600s
-    until [ "$?" == 0 ]
+    STATUS=$(oc get pod vault-0 -n vault -o jsonpath='{.status.phase}')
+    until [ "$STATUS" == "Running" ]
     do
         echo -e "${GREEN}Waiting for 0 rc from oc commands.${NC}"
         ((i=i+1))
@@ -79,9 +80,9 @@ wait_for_vault_pod () {
             exit 1
         fi
         sleep 5
-        oc wait --for=condition=Ready pod -l app.kubernetes.io/instance=vault -n vault --timeout=600s
+        STATUS=$(oc get pod vault-0 -n vault -o jsonpath='{.status.phase}')
     done
-    echo "💥 Waiting for vault pod Done" | tee -a output.log
+    echo "💥 Waiting for vault pod ran OK"
 }
 wait_for_vault_pod
 
