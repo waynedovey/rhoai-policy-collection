@@ -91,7 +91,6 @@ check_llm_pods() {
             exit 1
         fi
         sleep 10
-        PODS=$(oc get pods -n llama-serving | grep -e Running | wc -l)
         # this is because we need llama to start first before deepseek
         # vllm gpu_memory_utilization is calc on "current available" not actual
         # and we cannot predict who will start up first
@@ -103,6 +102,7 @@ check_llm_pods() {
                 oc -n llama-serving delete $(oc get pods -n llama-serving -l app=isvc.sno-deepseek-qwen3-vllm-predictor -o name)
             fi
         fi
+        PODS=$(oc get pods -n llama-serving | grep -e Running | wc -l)
     done
     echo "🌴 check_llm_pods $PODS ran OK"
 }
