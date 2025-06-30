@@ -29,21 +29,21 @@ wait_for_openshift_api() {
 wait_for_openshift_api
 
 login () {
-    echo "💥 Login to OpenShift..." | tee -a output.log
+    echo "💥 Login to OpenShift..."
     local i=0
     oc login -u admin -p ${ADMIN_PASSWORD} --server=https://api.sno.${BASE_DOMAIN}:6443
     until [ "$?" == 0 ]
     do
-        echo -e "${GREEN}Waiting for 0 rc from oc commands.${NC}" 2>&1 | tee -a output.log
+        echo -e "${GREEN}Waiting for 0 rc from oc commands.${NC}"
         ((i=i+1))
         if [ $i -gt 100 ]; then
-            echo -e "🕱${RED}Failed - oc login never ready?.${NC}" 2>&1 | tee -a output.log
+            echo -e "🕱${RED}Failed - oc login never ready?.${NC}"
             exit 1
         fi
         sleep 10
         oc login -u admin -p ${ADMIN_PASSWORD} --server=https://api.sno.${BASE_DOMAIN}:6443
     done
-    echo "💥 Login to OpenShift Done" | tee -a output.log
+    echo "💥 Login to OpenShift Done"
 }
 login
 
@@ -64,8 +64,26 @@ wait_for_project() {
     done
     echo "🌴 wait_for_project $project ran OK"
 }
-
 wait_for_project vault
+
+wait_for_vault_pod () {
+    echo "💥 Waiting for vault pod ..."
+    local i=0
+    oc wait --for=condition=Ready pod -l app.kubernetes.io/instance=vault -n vault --timeout=600s
+    until [ "$?" == 0 ]
+    do
+        echo -e "${GREEN}Waiting for 0 rc from oc commands.${NC}"
+        ((i=i+1))
+        if [ $i -gt 100 ]; then
+            echo -e "🕱${RED}Failed - oc never ready?.${NC}"
+            exit 1
+        fi
+        sleep 5
+        oc wait --for=condition=Ready pod -l app.kubernetes.io/instance=vault -n vault --timeout=600s
+    done
+    echo "💥 Waiting for vault pod Done" | tee -a output.log
+}
+wait_for_vault_pod
 
 check_done() {
     echo "🌴 Running check_done..."
@@ -85,7 +103,7 @@ if check_done; then
 fi
 
 init () {
-    echo "💥 Init Vault..." | tee -a output.log
+    echo "💥 Init Vault..."
     local i=0
     oc -n vault exec vault-0 -- vault operator init -key-threshold=1 -key-shares=1 -tls-skip-verify 2>&1 | tee /tmp/vault-init
     until [ "$?" == 0 ]
@@ -99,7 +117,7 @@ init () {
         sleep 10
         oc -n vault exec vault-0 -- vault operator init -key-threshold=1 -key-shares=1 -tls-skip-verify 2>&1 | tee /tmp/vault-init
     done
-    echo "💥 Init Vault Done" | tee -a output.log
+    echo "💥 Init Vault Done"
 }
 init
 
