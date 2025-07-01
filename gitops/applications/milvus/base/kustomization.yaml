@@ -1,6 +1,5 @@
 ---
 resources:
-  - console-link.yaml
   - configmap.yaml
   - pvc.yaml
   - deployment.yaml

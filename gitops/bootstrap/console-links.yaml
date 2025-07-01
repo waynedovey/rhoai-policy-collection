@@ -22,3 +22,15 @@ spec:
   href: https://minio-minio.apps.$CLUSTER_NAME.$BASE_DOMAIN
   location: ApplicationMenu
   text: minio
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: milvus
+spec:
+  applicationMenu:
+    imageURL: https://raw.githubusercontent.com/milvus-io/artwork/refs/heads/master/icon/color/milvus-icon-color.svg
+    section: SRE
+  href: https://milvus-console-milvus.apps.$CLUSTER_NAME.$BASE_DOMAIN
+  location: ApplicationMenu
+  text: milvus
