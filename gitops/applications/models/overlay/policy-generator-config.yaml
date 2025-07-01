@@ -24,6 +24,10 @@ policyDefaults:
     - NIST SP 800-53
   policyAnnotations: {"argocd.argoproj.io/compare-options": "IgnoreExtraneous"}
 policies:
-  - name: models
+  - name: models-serving
     manifests:
       - path: sno/
+  - name: models-inference
+    disabled: true
+    manifests:
+      - path: sno-raw/
