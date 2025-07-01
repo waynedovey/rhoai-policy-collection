@@ -4,21 +4,6 @@ resources:
   - distributed-workloads.yaml
   - namespace.yaml
   - llama-cpp-runtime-template.yaml
-#  - serving-llama32-vllm.yaml
-#  - serving-granite32-vllm.yaml
-#  - serving-deepseek-qwen3-cpp.yaml
-#  - serving-llama32-vllm-oci.yaml
-#  - serving-llama32-3b-vllm-oci.yaml
-  - serving-llama32-3b-vllm-oci-2.yaml
-#  - serving-granite32-vllm-oci.yaml
-#  - serving-granite32-8b-vllm-oci.yaml
-#  - serving-granite-8b-lab-v2-vllm-oci.yaml
-#  - serving-deepseek-qwen3-cpp-oci.yaml
-#  - serving-deepseek-qwen3-vllm-oci.yaml
-  - serving-deepseek-qwen3-vllm-oci-2.yaml
-#  - serving-qwen31-cpp.yaml
-#  - serving-qwen25-cpp.yaml
-#  - serving-granite-vision32-vllm.yaml
   - model-catalog-unmanaged-sources.yaml
 
 apiVersion: kustomize.config.k8s.io/v1beta1
