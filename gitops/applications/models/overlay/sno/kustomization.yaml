@@ -1,0 +1,7 @@
+---
+resources:
+  - ../deepseek-r1
+#  - ../finetunes
+#  - ../granite
+  - ../llama3
+#  - ../qwen
