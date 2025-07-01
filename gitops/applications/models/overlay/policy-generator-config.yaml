@@ -28,6 +28,6 @@ policies:
     manifests:
       - path: sno/
   - name: models-inference
-    disabled: true
+    disabled: false
     manifests:
       - path: sno-raw/
