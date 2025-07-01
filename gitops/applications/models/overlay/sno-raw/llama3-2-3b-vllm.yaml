@@ -1,24 +1,26 @@
 object-templates-raw: |
-  {{- if not (lookup "v1" "ConfigMap" "llama-serving" "undeploy-sno-deepseek-qwen3-vllm") }}
+  {{- if not (lookup "v1" "ConfigMap" "llama-serving" "undeploy-llama3-2-3b") }}
   - complianceType: musthave
     objectDefinition:
       apiVersion: serving.kserve.io/v1beta1
       kind: InferenceService
       metadata:
         annotations:
-          argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-          argocd.argoproj.io/sync-wave: "4"
-          openshift.io/display-name: sno-deepseek-qwen3-vllm
+          openshift.io/display-name: llama3.2-3b
           serving.knative.openshift.io/enablePassthrough: "true"
           serving.kserve.io/deploymentMode: RawDeployment
           sidecar.istio.io/inject: "false"
           sidecar.istio.io/rewriteAppHTTPProbers: "true"
         labels:
+          app.kubernetes.io/component: llm-inference
+          app.kubernetes.io/instance: llama3-2-3b
+          app.kubernetes.io/name: llama3-2-3b
           opendatahub.io/dashboard: "true"
-        name: sno-deepseek-qwen3-vllm
+        name: llama3-2-3b
         namespace: llama-serving
       spec:
         predictor:
+          automountServiceAccountToken: false
           maxReplicas: 1
           minReplicas: 1
           model:
@@ -30,8 +32,8 @@ object-templates-raw: |
                 nvidia.com/gpu: "1"
               requests:
                 nvidia.com/gpu: "1"
-            runtime: sno-deepseek-qwen3-vllm
-            storageUri: oci://quay.io/eformat/deepseek-r1-0528-qwen3-8b-bnb-4bit:latest-ubi
+            runtime: llama3-2-3b
+            storageUri: oci://quay.io/redhat-ai-services/modelcar-catalog:llama-3.2-3b-instruct
           tolerations:
           - effect: NoSchedule
             key: nvidia.com/gpu
