@@ -36,7 +36,4 @@ object-templates-raw: |
           - effect: NoSchedule
             key: nvidia.com/gpu
             operator: Exists
-  pruneObjectBehavior: DeleteAll
-  remediationAction: enforce
-  severity: medium
   {{- end }}

@@ -29,5 +29,6 @@ policies:
       - path: sno/
   - name: models-inference
     disabled: false
+    pruneObjectBehavior: "DeleteAll"
     manifests:
       - path: sno-raw/
