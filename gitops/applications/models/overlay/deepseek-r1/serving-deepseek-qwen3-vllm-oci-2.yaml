@@ -1,3 +1,4 @@
+{{- if (ne (lookup "v1" "ConfigMap" "llama-serving" "nomodels").metadata.name "nomodels") }}
 ---
 apiVersion: serving.kserve.io/v1alpha1
 kind: ServingRuntime
@@ -80,6 +81,7 @@ spec:
     - effect: NoSchedule
       key: nvidia.com/gpu
       operator: Exists
+{{- end }}
 ---
 kind: Secret
 apiVersion: v1
