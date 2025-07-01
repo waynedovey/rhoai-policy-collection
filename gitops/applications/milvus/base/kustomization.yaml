@@ -1,0 +1,8 @@
+---
+resources:
+  - console-link.yaml
+  - configmap.yaml
+  - pvc.yaml
+  - deployment.yaml
+  - service.yaml
+  - route.yaml
