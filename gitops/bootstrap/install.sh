@@ -107,6 +107,15 @@ all() {
     wait_for_project agent-demo
 }
 
+usage() {
+  cat <<EOF 2>&1
+usage: $0 [ -d ] [ -b <base_domain> ] [ -c <cluster_name> ] [ -e <environment> ] [ -k <kubeconfig> ]
+
+Install the apps
+EOF
+  exit 1
+}
+
 while getopts db:c:e:k: opts; do
   case $opts in
     b)
@@ -136,10 +145,10 @@ shift `expr $OPTIND - 1`
 [ -z "$BASE_DOMAIN" ] && echo "🕱 Error: must supply BASE_DOMAIN in env or cli" && exit 1
 [ -z "$CLUSTER_NAME" ] && echo "🕱 Error: must supply CLUSTER_NAME in env or cli" && exit 1
 [ -z "$ENVIRONMENT" ] && echo "🕱 Error: must supply ENVIRONMENT in env or cli" && exit 1
-[ -z "$KUBECONFIG" ] && [ -z "KUBECONFIG" ] && echo "🕱 Error: KUBECONFIG not set in env or cli" && exit 1
+[ -z "$KUBECONFIG" ] && echo "🕱 Error: KUBECONFIG not set in env or cli" && exit 1
 [ -z "$AWS_PROFILE" ] && [ -z "$AWS_ACCESS_KEY_ID" ] && echo "🕱 Error: AWS_ACCESS_KEY_ID not set in env" && exit 1
 [ -z "$AWS_PROFILE" ] && [ -z "$AWS_SECRET_ACCESS_KEY" ] && echo "🕱 Error: AWS_SECRET_ACCESS_KEY not set in env" && exit 1
-[ -z "$AWS_PROFILE" ] && [ -z "$AWS_DEFAULT_REGION" ] && echo "🕱 Error: AWS_DEFAULT_REGION not set in env" && exit
+[ -z "$AWS_PROFILE" ] && [ -z "$AWS_DEFAULT_REGION" ] && echo "🕱 Error: AWS_DEFAULT_REGION not set in env" && exit 1
 
 all
 

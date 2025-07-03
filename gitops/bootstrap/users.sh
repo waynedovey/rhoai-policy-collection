@@ -10,26 +10,32 @@ export NO_ADMINS=${NO_ADMINS:-1}
 
 create_htpasswd() {
     echo "🌴 Running create_htpasswd..."
-    for x in `seq 1 ${NO_ADMINS}`; do
-        [ $x == 1 ] && htpasswd -bBc /tmp/htpasswd admin ${ADMIN_PASSWORD}
+    for x in $(seq 1 ${NO_ADMINS}); do
+        if [ "$x" == 1 ]; then
+            htpasswd -bBc /tmp/htpasswd admin ${ADMIN_PASSWORD}
+        else
+            htpasswd -bB /tmp/htpasswd admin$x ${ADMIN_PASSWORD}
+        fi
         if [ "$?" != 0 ]; then
             echo -e "🚨${RED}Failed - to run create_htpasswd ?${NC}"
             exit 1
         fi
-        [ $x -gt 1 ] && htpasswd -bB /tmp/htpasswd admin$x ${ADMIN_PASSWORD}
     done
     echo "🌴 create_htpasswd ran OK"
 }
 
 add_cluster_admins() {
     echo "🌴 Running add_cluster_admins..."
-    for x in `seq 1 ${NO_ADMINS}`; do
-        [ $x == 1 ] && oc adm policy add-cluster-role-to-user cluster-admin admin
+    for x in $(seq 1 ${NO_ADMINS}); do
+        if [ "$x" == 1 ]; then
+            oc adm policy add-cluster-role-to-user cluster-admin admin
+        else
+            oc adm policy add-cluster-role-to-user cluster-admin admin$x
+        fi
         if [ "$?" != 0 ]; then
             echo -e "🚨${RED}Failed - to run add_cluster_admins ?${NC}"
             exit 1
         fi
-        [ $x -gt 1 ] && oc adm policy add-cluster-role-to-user cluster-admin admin$x
     done
     echo "🌴 add_cluster_admins ran OK"
 }
@@ -102,8 +108,6 @@ all() {
 # Check for EnvVars
 [ -z "$BASE_DOMAIN" ] && echo "🕱 Error: must supply BASE_DOMAIN in env or cli" && exit 1
 [ -z "$ADMIN_PASSWORD" ] && read -s -p "ADMIN_PASSWORD: " ADMIN_PASSWORD
-
-CLUSTER_DOMAIN=apps.${BASE_DOMAIN}
 
 all
 

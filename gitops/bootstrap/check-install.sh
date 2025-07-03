@@ -45,7 +45,7 @@ operation:
 check_pods_allocatable() {
     echo "🌴 Running check_pods_allocatable..."
     local i=0
-    PODS=$(oc get $(oc get node -o name -l node-role.kubernetes.io/master=) -o=jsonpath={.status.allocatable.pods})
+    PODS=$(oc get $(oc get node -o name -l node-role.kubernetes.io/master="") -o=jsonpath={.status.allocatable.pods})
     until [ "$PODS" == 500 ]
     do
         echo -e "${GREEN}Waiting for pods $PODS to equal 500.${NC}"
@@ -55,7 +55,7 @@ check_pods_allocatable() {
             exit 1
         fi
         sleep 10
-        PODS=$(oc get $(oc get node -o name -l node-role.kubernetes.io/master=) -o=jsonpath={.status.allocatable.pods})
+        PODS=$(oc get $(oc get node -o name -l node-role.kubernetes.io/master="") -o=jsonpath={.status.allocatable.pods})
     done
     echo "🌴 check_pods_allocatable $PODS ran OK"
 }
@@ -63,7 +63,7 @@ check_pods_allocatable() {
 check_gpus_allocatable() {
     echo "🌴 Running check_gpus_allocatable..."
     local i=0
-    GPUS=$(oc get $(oc get node -o name -l node-role.kubernetes.io/master=) -o=jsonpath={.status.allocatable.nvidia\\.com\\/gpu})
+    GPUS=$(oc get $(oc get node -o name -l node-role.kubernetes.io/master="") -o=jsonpath={.status.allocatable.nvidia\\.com\\/gpu})
     until [ "$GPUS" == 8 ]
     do
         echo -e "${GREEN}Waiting for gpus $GPUS to equal 8.${NC}"
@@ -73,7 +73,7 @@ check_gpus_allocatable() {
             exit 1
         fi
         sleep 10
-        GPUS=$(oc get $(oc get node -o name -l node-role.kubernetes.io/master=) -o=jsonpath={.status.allocatable.nvidia\\.com\\/gpu})
+        GPUS=$(oc get $(oc get node -o name -l node-role.kubernetes.io/master="") -o=jsonpath={.status.allocatable.nvidia\\.com\\/gpu})
     done
     echo "🌴 check_gpus_allocatable $GPUS ran OK"
 }
@@ -106,6 +106,10 @@ check_llm_pods() {
     done
     echo "🌴 check_llm_pods $PODS ran OK"
 }
+
+[ -z "$ENVIRONMENT" ] && echo "🕱 Error: must supply ENVIRONMENT in env" && exit 1
+[ -z "$BASE_DOMAIN" ] && echo "🕱 Error: must supply BASE_DOMAIN in env" && exit 1
+[ -z "$CLUSTER_NAME" ] && echo "🕱 Error: must supply CLUSTER_NAME in env" && exit 1
 
 echo "🌴 ENVIRONMENT set to $ENVIRONMENT"
 echo "🌴 BASE_DOMAIN set to $BASE_DOMAIN"
