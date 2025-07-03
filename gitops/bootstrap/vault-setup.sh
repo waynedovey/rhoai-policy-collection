@@ -12,6 +12,8 @@ readonly NC='\033[0m' # No Color
 [ -z "$AWS_PROFILE" ] && echo "🕱 Error: must supply AWS_PROFILE in env" && exit 1
 [ -z "$BASE_DOMAIN" ] && echo "🕱 Error: must supply BASE_DOMAIN in env" && exit 1
 [ -z "$ADMIN_PASSWORD" ] && echo "🕱 Error: must supply ADMIN_PASSWORD in env" && exit 1
+[ -z "$CLUSTER_NAME" ] && echo "🕱 Error: must supply CLUSTER_NAME in env" && exit 1
+[ -z "$ANSIBLE_VAULT_SECRET" ] && echo "🕱 Error: must supply ANSIBLE_VAULT_SECRET in env" && exit 1
 
 # use login
 export KUBECONFIG=~/.kube/config.${AWS_PROFILE}
@@ -36,7 +38,7 @@ wait_for_openshift_api
 login () {
     echo "💥 Login to OpenShift..."
     local i=0
-    oc login -u admin -p ${ADMIN_PASSWORD} --server=https://api.sno.${BASE_DOMAIN}:6443
+    oc login -u admin -p ${ADMIN_PASSWORD} --server=https://api.${CLUSTER_NAME}.${BASE_DOMAIN}:6443
     until [ "$?" == 0 ]
     do
         echo -e "${GREEN}Waiting for 0 rc from oc commands.${NC}"
@@ -46,7 +48,7 @@ login () {
             exit 1
         fi
         sleep 10
-        oc login -u admin -p ${ADMIN_PASSWORD} --server=https://api.sno.${BASE_DOMAIN}:6443
+        oc login -u admin -p ${ADMIN_PASSWORD} --server=https://api.${CLUSTER_NAME}.${BASE_DOMAIN}:6443
     done
     echo "💥 Login to OpenShift Done"
 }
@@ -105,7 +107,7 @@ check_done() {
 if check_done; then
     echo -e "\n🌻${GREEN}Vault setup OK.${NC}🌻\n"
     exit 0;
-fi
+    fi
 
 init () {
     echo "💥 Init Vault..."
@@ -116,7 +118,7 @@ init () {
         echo -e "${GREEN}Waiting for 0 rc from oc commands.${NC}"
         ((i=i+1))
         if [ $i -gt 100 ]; then
-            echo -e "🕱${RED}Failed - oc login never ready?.${NC}"
+            echo -e "🕱${RED}Failed - vault init never ready?.${NC}"
             exit 1
         fi
         sleep 10
@@ -135,7 +137,7 @@ if [ "$?" != 0 ]; then
     exit 1
 fi
 
-export VAULT_ROUTE=vault-vault.apps.sno.${BASE_DOMAIN}
+export VAULT_ROUTE=vault-vault.apps.${CLUSTER_NAME}.${BASE_DOMAIN}
 export VAULT_ADDR=https://${VAULT_ROUTE}
 export VAULT_SKIP_VERIFY=true
 
@@ -147,7 +149,7 @@ fi
 
 export APP_NAME=vault
 export PROJECT_NAME=openshift-gitops
-export CLUSTER_DOMAIN=apps.sno.${BASE_DOMAIN}
+export CLUSTER_DOMAIN=apps.${CLUSTER_NAME}.${BASE_DOMAIN}
 
 vault auth enable -path=$CLUSTER_DOMAIN-${PROJECT_NAME} kubernetes
 
@@ -167,7 +169,7 @@ bound_service_account_namespaces=$PROJECT_NAME \
 policies=$CLUSTER_DOMAIN-$PROJECT_NAME-kv-read \
 period=120s
 
-CA_CRT=$(openssl s_client -showcerts -connect api.sno.${BASE_DOMAIN}:6443 2>&1 | awk '/BEGIN CERTIFICATE/,/END CERTIFICATE/ {print $0}')
+CA_CRT=$(openssl s_client -showcerts -connect api.${CLUSTER_NAME}.${BASE_DOMAIN}:6443 2>&1 | awk '/BEGIN CERTIFICATE/,/END CERTIFICATE/ {print $0}')
 
 vault write auth/$CLUSTER_DOMAIN-${PROJECT_NAME}/config \
 kubernetes_host="$(oc whoami --show-server)" \
