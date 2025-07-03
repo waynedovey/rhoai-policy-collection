@@ -29,10 +29,23 @@ setup_extra_storage() {
     --filters "Name=tag-value,Values=$CLUSTER_NAME-*-master-0" "Name=instance-state-name,Values=running" \
     --output text)
 
+    IFS=$'\n' read -d '' -r -a lines < <(aws ec2 describe-tags --filters "Name=resource-id,Values=${INSTANCE_ID}" --output text)
+    TAGS=
+    if [ ! -z "$lines" ]; then
+        set -o pipefail
+        for line in "${lines[@]}"; do
+            read -r type key resourceid resourcetype value <<< "$line"
+            TAGS+={Key="$key",Value="$value"},
+        done
+    else 
+        echo -e "💀${ORANGE} No tags found for instance ${INSTANCE_ID} ? ${NC}";
+    fi
+
     vol=$(aws ec2 create-volume \
     --availability-zone ${AWS_ZONE} \
     --volume-type gp3 \
     --size ${EXTRA_DISK_SIZE} \
+    --tag-specifications "ResourceType=volume,Tags=[${TAGS%?}]" \
     --region=${AWS_DEFAULT_REGION})
 
     sleep 5
