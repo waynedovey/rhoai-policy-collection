@@ -107,13 +107,13 @@ check_done() {
 if check_done; then
     echo -e "\n🌻${GREEN}Vault setup OK.${NC}🌻\n"
     exit 0;
-    fi
+fi
 
 init () {
     echo "💥 Init Vault..."
     local i=0
     oc -n vault exec vault-0 -- vault operator init -key-threshold=1 -key-shares=1 -tls-skip-verify 2>&1 | tee /tmp/vault-init-${AWS_PROFILE}
-    until [ "$?" == 0 ]
+    until [ "${PIPESTATUS[0]}" == 0 ]
     do
         echo -e "${GREEN}Waiting for 0 rc from oc commands.${NC}"
         ((i=i+1))
@@ -129,7 +129,15 @@ init () {
 init
 
 export UNSEAL_KEY=$(cat /tmp/vault-init-${AWS_PROFILE} | grep -e 'Unseal Key 1' | awk '{print $4}')
+if [ -z "$UNSEAL_KEY" ]; then
+    echo -e "🕱${RED}Failed - to extract unseal key from vault init output${NC}"
+    exit 1
+fi
 export ROOT_TOKEN=$(cat /tmp/vault-init-${AWS_PROFILE} | grep -e 'Initial Root Token' | awk '{print $4}')
+if [ -z "$ROOT_TOKEN" ]; then
+    echo -e "🕱${RED}Failed - to get root token ?${NC}"
+    exit 1
+fi
 
 oc -n vault exec vault-0 -- vault operator unseal -tls-skip-verify $UNSEAL_KEY
 if [ "$?" != 0 ]; then
@@ -153,10 +161,8 @@ export CLUSTER_DOMAIN=apps.${CLUSTER_NAME}.${BASE_DOMAIN}
 
 vault auth enable -path=$CLUSTER_DOMAIN-${PROJECT_NAME} kubernetes
 
-export MOUNT_ACCESSOR=$(vault auth list -format=json | jq -r ".\"$CLUSTER_DOMAIN-$PROJECT_NAME/\".accessor")
-
 vault policy write $CLUSTER_DOMAIN-$PROJECT_NAME-kv-read -<< EOF
-path "kv/data/ocp/sno/*" {
+path "kv/data/ocp/${CLUSTER_NAME}/*" {
 capabilities=["read","list"]
 }
 EOF
