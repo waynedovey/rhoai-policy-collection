@@ -107,11 +107,9 @@ check_llm_pods() {
     echo "🌴 check_llm_pods $PODS ran OK"
 }
 
-[ -z "$ENVIRONMENT" ] && echo "🕱 Error: must supply ENVIRONMENT in env" && exit 1
 [ -z "$BASE_DOMAIN" ] && echo "🕱 Error: must supply BASE_DOMAIN in env" && exit 1
 [ -z "$CLUSTER_NAME" ] && echo "🕱 Error: must supply CLUSTER_NAME in env" && exit 1
 
-echo "🌴 ENVIRONMENT set to $ENVIRONMENT"
 echo "🌴 BASE_DOMAIN set to $BASE_DOMAIN"
 echo "🌴 CLUSTER_NAME set to $CLUSTER_NAME"
 
