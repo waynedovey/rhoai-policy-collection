@@ -138,7 +138,7 @@ if [ -z "$ROOT_TOKEN" ]; then
     echo -e "🕱${RED}Failed - to get root token ?${NC}"
     exit 1
 fi
-rm -f /tmp/vault-init-${AWS_PROFILE} 2>&1 / dev/null
+rm -f /tmp/vault-init-${AWS_PROFILE} 2>&1>/dev/null
 
 oc -n vault exec vault-0 -- vault operator unseal -tls-skip-verify $UNSEAL_KEY
 if [ "$?" != 0 ]; then
