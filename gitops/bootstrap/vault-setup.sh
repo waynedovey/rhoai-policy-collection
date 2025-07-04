@@ -140,21 +140,47 @@ if [ -z "$ROOT_TOKEN" ]; then
 fi
 rm -f /tmp/vault-init-${AWS_PROFILE} 2>&1>/dev/null
 
-oc -n vault exec vault-0 -- vault operator unseal -tls-skip-verify $UNSEAL_KEY
-if [ "$?" != 0 ]; then
-    echo -e "🕱${RED}Failed - to unseal vault ?${NC}"
-    exit 1
-fi
+unseal() {
+    echo "💥 Unseal Vault..."
+    local i=0
+    oc -n vault exec vault-0 -- vault operator unseal -tls-skip-verify $UNSEAL_KEY
+    until [ "$?" == 0 ]
+    do
+        echo -e "${GREEN}Waiting for 0 rc from oc commands.${NC}"
+        ((i=i+1))
+        if [ $i -gt 20 ]; then
+            echo -e "🕱${RED}Failed - to unseal vault ?${NC}"
+            exit 1
+        fi
+        sleep 5
+        oc -n vault exec vault-0 -- vault operator unseal -tls-skip-verify $UNSEAL_KEY
+    done
+    echo "💥 Unseal Vault Done"
+}
+unseal
 
 export VAULT_ROUTE=vault-vault.apps.${CLUSTER_NAME}.${BASE_DOMAIN}
 export VAULT_ADDR=https://${VAULT_ROUTE}
 export VAULT_SKIP_VERIFY=true
 
-vault login token=${ROOT_TOKEN}
-if [ "$?" != 0 ]; then
-    echo -e "🕱${RED}Failed - to login to vault ?${NC}"
-    exit 1
-fi
+login() {
+    echo "💥 Login Vault..."
+    local i=0
+    vault login token=${ROOT_TOKEN}
+    until [ "$?" == 0 ]
+    do
+        echo -e "${GREEN}Waiting for 0 rc from oc commands.${NC}"
+        ((i=i+1))
+        if [ $i -gt 20 ]; then
+            echo -e "🕱${RED}Failed - to login to vault ?${NC}"
+            exit 1
+        fi
+        sleep 5
+        vault login token=${ROOT_TOKEN}
+    done
+    echo "💥 Login Vault Done"
+}
+login
 
 export APP_NAME=vault
 export PROJECT_NAME=openshift-gitops
