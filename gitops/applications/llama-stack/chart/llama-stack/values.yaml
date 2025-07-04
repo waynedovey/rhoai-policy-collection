@@ -178,7 +178,7 @@ podDisruptionBudget:
 
 # OpenTelemetry Collector configuration
 otelCollector:
-  enabled: true
+  enabled: false
   name: "llamastack-otelsidecar"
   mode: "sidecar"
   replicas: 1
