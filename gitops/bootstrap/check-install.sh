@@ -73,6 +73,11 @@ check_gpus_allocatable() {
             exit 1
         fi
         sleep 10
+        # buggy 4.19 - sometimes the image-prune job holds up cluster install completion which holds up gpu operator
+        STATUS=$(oc -n openshift-image-registry get jobs 2>&1 | grep Failed | wc -l)
+        if [ "$STATUS" -gt 0 ]; then
+            oc -n openshift-image-registry delete cronjob image-pruner
+        fi
         GPUS=$(oc get $(oc get node -o name -l node-role.kubernetes.io/master="") -o=jsonpath={.status.allocatable.nvidia\\.com\\/gpu})
     done
     echo "🌴 check_gpus_allocatable $GPUS ran OK"
