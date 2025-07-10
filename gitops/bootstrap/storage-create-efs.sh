@@ -7,6 +7,8 @@ readonly ORANGE='\033[38;5;214m'
 readonly NC='\033[0m' # No Color
 readonly RUN_DIR=$(pwd)
 
+EFSID=
+
 echo "🌴 Create EFS storage..."
 
 # Check for EnvVars
@@ -55,6 +57,7 @@ if [ -z "$fsid" ]; then
     echo -e "🚨${RED}Failed - to create efs filesystem ocp-efs ? ${NC}"
     exit 1
 fi
+EFSID=${fsid}
 
 cidr_block=$(aws ec2 describe-vpcs --region=${AWS_DEFAULT_REGION} --vpc-ids ${vpcid} --query "Vpcs[].CidrBlock" --output text)
 if [ -z "$cidr_block" ]; then
@@ -92,6 +95,33 @@ done
 if [ -z "$subnets" ]; then
     echo -e "💀${ORANGE} Could not find subnets for vpc ${vpcname}, mount targets not created - check TAG names $TAG1,$TAG2,$TAG3 ? ${NC}";
 fi
+
+configure_sc() {
+    echo "🌴 Running configure_sc..."
+
+cat << EOF > /tmp/storage-class.yaml
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: efs-sc
+provisioner: efs.csi.aws.com
+parameters:
+  provisioningMode: efs-ap 
+  fileSystemId: $EFSID
+  directoryPerms: "700" 
+  gidRangeStart: "1000" 
+  gidRangeEnd: "2000" 
+  basePath: "/dynamic_provisioning" 
+EOF
+
+    oc apply -f /tmp/storage-class.yaml -n openshift-config
+    if [ "$?" != 0 ]; then
+      echo -e "🚨${RED}Failed - to create storage class, configure_sc ?${NC}"
+      exit 1
+    fi
+    echo "🌴 configure_sc ran OK"
+}
+configure_sc
 
 echo "🌴 Create EFS storage Done."
 exit 0
