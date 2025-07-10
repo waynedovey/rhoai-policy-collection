@@ -2,3 +2,4 @@
 resources:
   - ../../../base
   - lvm-cluster.yaml
+  - efs-csi-driver.yaml
