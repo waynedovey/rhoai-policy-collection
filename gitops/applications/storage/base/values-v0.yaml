@@ -24,3 +24,15 @@ operators:
     source: redhat-operators # v0
     sourceNamespace: openshift-marketplace # v0
     enabled: true
+
+  # efs
+  - name: aws-efs-csi-driver-operator
+    namespace:
+      name: openshift-cluster-csi-drivers
+      create: false
+    channels: [stable] # v0,1
+    version: "4.19.0" # v1
+    catalog: openshift-redhat-operators #v1
+    source: redhat-operators # v0
+    sourceNamespace: openshift-marketplace # v0
+    enabled: true
