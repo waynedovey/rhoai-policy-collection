@@ -89,6 +89,9 @@ do
       echo -e "💀${ORANGE} Failed to create mount target for fsid: ${fsid} and subnet: ${subnet} with sg: ${mount_target_group_id} in region: ${AWS_DEFAULT_REGION} ? ${NC}";
   fi
 done
+if [ -z "$subnets" ]; then
+    echo -e "💀${ORANGE} Could not find subnets for vpc ${vpcname}, mount targets not created - check TAG names $TAG1,$TAG2,$TAG3 ? ${NC}";
+fi
 
 echo "🌴 Create EFS storage Done."
 exit 0
