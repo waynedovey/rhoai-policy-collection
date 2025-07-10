@@ -80,9 +80,9 @@ if [ "${PIPESTATUS[0]}" != 0 ]; then
 fi
 
 # us-east-2
-TAG1=${vpcname%%-vpc}-subnet-private-${AWS_DEFAULT_REGION}a
-TAG2=${vpcname%%-vpc}-subnet-private-${AWS_DEFAULT_REGION}b
-TAG3=${vpcname%%-vpc}-subnet-private-${AWS_DEFAULT_REGION}c
+TAG1=${vpcname%%-vpc}-subnet-public-${AWS_DEFAULT_REGION}a
+TAG2=${vpcname%%-vpc}-subnet-public-${AWS_DEFAULT_REGION}b
+TAG3=${vpcname%%-vpc}-subnet-public-${AWS_DEFAULT_REGION}c
 subnets=$(aws ec2 describe-subnets --region=${AWS_DEFAULT_REGION} --filters "Name=tag:Name,Values=$TAG1,$TAG2,$TAG3" | jq --raw-output '.Subnets[].SubnetId')
 for subnet in ${subnets};
 do
