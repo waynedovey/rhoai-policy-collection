@@ -29,7 +29,8 @@ operators:
   - name: aws-efs-csi-driver-operator
     namespace:
       name: openshift-cluster-csi-drivers
-      create: false
+      create: true
+      global: true
     channels: [stable] # v0,1
     version: "4.19.0" # v1
     catalog: openshift-redhat-operators #v1
