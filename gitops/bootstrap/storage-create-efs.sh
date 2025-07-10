@@ -99,7 +99,7 @@ fi
 configure_sc() {
     echo "🌴 Running configure_sc..."
 
-cat << EOF > /tmp/storage-class.yaml
+cat << EOF > /tmp/storage-class-${AWS_PROFILE}.yaml
 kind: StorageClass
 apiVersion: storage.k8s.io/v1
 metadata:
@@ -114,11 +114,12 @@ parameters:
   basePath: "/dynamic_provisioning" 
 EOF
 
-    oc apply -f /tmp/storage-class.yaml -n openshift-config
+    oc apply -f /tmp/storage-class-${AWS_PROFILE}.yaml -n openshift-config
     if [ "$?" != 0 ]; then
       echo -e "🚨${RED}Failed - to create storage class, configure_sc ?${NC}"
       exit 1
     fi
+    rm -f /tmp/storage-class-${AWS_PROFILE}.yaml 2>&1>/dev/null
     echo "🌴 configure_sc ran OK"
 }
 configure_sc
