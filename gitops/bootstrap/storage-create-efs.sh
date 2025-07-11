@@ -17,6 +17,12 @@ echo "🌴 Create EFS storage..."
 [ -z "$AWS_PROFILE" ] && [ -z "$AWS_SECRET_ACCESS_KEY" ] && echo "🕱 Error: AWS_SECRET_ACCESS_KEY not set in env" && exit 1
 [ -z "$AWS_PROFILE" ] && [ -z "$AWS_DEFAULT_REGION" ] && echo "🕱 Error: AWS_DEFAULT_REGION not set in env" && exit
 
+oc get sc/efs-sc
+if [ "$?" == 0 ]; then
+    echo "🌴 Found EFS storage class OK - Done."
+    exit 0
+fi
+
 vpcid=$(aws ec2 describe-vpcs --region=${AWS_DEFAULT_REGION} | jq -r '.Vpcs[0].VpcId')
 if [ -z "$vpcid" ]; then
     echo -e "🚨${RED}Failed - no vpcid found for region ${AWS_DEFAULT_REGION} ? ${NC}"
