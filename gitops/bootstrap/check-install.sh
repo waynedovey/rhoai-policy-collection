@@ -50,9 +50,14 @@ check_pods_allocatable() {
     do
         echo -e "${GREEN}Waiting for pods $PODS to equal 500.${NC}"
         ((i=i+1))
-        if [ $i -gt 200 ]; then
+        if [ $i -gt 300 ]; then
             echo -e "🕱${RED}Failed - node allocatable pods wrong - $PODS?.${NC}"
             exit 1
+        fi
+        if [ $i -eq 100 ]; then
+            echo -e "💀${ORANGE}Warn - check_pods_allocatable, forcing set-max-pods, continuing ${NC}"
+            # MC bug, does not always trigger it seems - argocd will recreate this
+            oc delete KubeletConfig set-max-pods
         fi
         sleep 10
         PODS=$(oc get $(oc get node -o name -l node-role.kubernetes.io/master="") -o=jsonpath={.status.allocatable.pods})
