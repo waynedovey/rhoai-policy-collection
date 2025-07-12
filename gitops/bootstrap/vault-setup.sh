@@ -171,11 +171,11 @@ login() {
     do
         echo -e "${GREEN}Waiting for 0 rc from oc commands.${NC}"
         ((i=i+1))
-        if [ $i -gt 20 ]; then
+        if [ $i -gt 100 ]; then
             echo -e "🕱${RED}Failed - to login to vault ?${NC}"
             exit 1
         fi
-        sleep 5
+        sleep 10
         vault login token=${ROOT_TOKEN}
     done
     echo "💥 Login Vault Done"
