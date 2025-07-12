@@ -7,6 +7,12 @@ readonly NC='\033[0m' # No Color
 readonly RUN_DIR=$(pwd)
 
 HOSTED_ZONE=
+ACME_STAGING=${ACME_STAGING:-}
+ACME_SERVER=https://acme-v02.api.letsencrypt.org/directory
+
+if [ ! -z "${ACME_STAGING}" ]; then
+    ACME_SERVER=https://acme-staging-v02.api.letsencrypt.org/directory
+fi
 
 get_hosted_zone() {
     query='HostedZones[?Name==`'${BASE_DOMAIN}.'`]|[].Id'
@@ -121,7 +127,7 @@ metadata:
   namespace: openshift-config
 spec:
   acme:
-    server: https://acme-v02.api.letsencrypt.org/directory  # https://acme-staging-v02.api.letsencrypt.org/directory
+    server: "${ACME_SERVER}
     email: "${EMAIL}"
     privateKeySecretRef:
       name: tls-secret
@@ -149,7 +155,7 @@ metadata:
   namespace: openshift-ingress
 spec:
   acme:
-    server: https://acme-v02.api.letsencrypt.org/directory  # https://acme-staging-v02.api.letsencrypt.org/directory  
+    server: "${ACME_SERVER}
     email: "${EMAIL}"
     privateKeySecretRef:
       name: tls-secret
