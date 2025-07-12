@@ -127,7 +127,7 @@ metadata:
   namespace: openshift-config
 spec:
   acme:
-    server: "${ACME_SERVER}
+    server: "${ACME_SERVER}"
     email: "${EMAIL}"
     privateKeySecretRef:
       name: tls-secret
@@ -155,7 +155,7 @@ metadata:
   namespace: openshift-ingress
 spec:
   acme:
-    server: "${ACME_SERVER}
+    server: "${ACME_SERVER}"
     email: "${EMAIL}"
     privateKeySecretRef:
       name: tls-secret
