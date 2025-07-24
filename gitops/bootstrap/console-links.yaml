@@ -17,7 +17,7 @@ metadata:
   name: minio
 spec:
   applicationMenu:
-    section: SRE
+    section: GenAI
     imageURL: https://min.io/resources/img/logo/MINIO_Bird.png
   href: https://minio-minio.apps.$CLUSTER_NAME.$BASE_DOMAIN
   location: ApplicationMenu
@@ -30,7 +30,7 @@ metadata:
 spec:
   applicationMenu:
     imageURL: https://raw.githubusercontent.com/milvus-io/artwork/refs/heads/master/icon/color/milvus-icon-color.svg
-    section: SRE
+    section: GenAI
   href: https://milvus-console-milvus.apps.$CLUSTER_NAME.$BASE_DOMAIN/webui
   location: ApplicationMenu
   text: milvus
@@ -46,3 +46,15 @@ spec:
   href: https://vault-vault.apps.$CLUSTER_NAME.$BASE_DOMAIN
   location: ApplicationMenu
   text: vault
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: llama-stack-playground
+spec:
+  applicationMenu:
+    section: GenAI
+    imageURL: https://avatars.githubusercontent.com/u/153379578?s=48&v=4
+  href: https://llama-stack-playground-llama-stack.apps.$CLUSTER_NAME.$BASE_DOMAIN
+  location: ApplicationMenu
+  text: llama-stack-playground
