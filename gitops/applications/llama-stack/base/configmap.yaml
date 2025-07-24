@@ -32,11 +32,6 @@ data:
       provider_id: sentence-transformers
       model_type: embedding
     - metadata: {}
-      model_id: llama-3-2-3b
-      provider_id: vllm-llama-3-2-3b
-      provider_model_id: llama-3-2-3b
-      model_type: llm
-    - metadata: {}
       model_id: llama-4-scout-17b-16e-w4a16
       provider_id: vllm-llama-4-guard
       provider_model_id: llama-4-scout-17b-16e-w4a16
@@ -60,13 +55,6 @@ data:
       - provider_id: sentence-transformers
         provider_type: inline::sentence-transformers
         config: {}
-      - provider_id: vllm-llama-3-2-3b
-        provider_type: "remote::vllm"
-        config:
-          url: "https://llama-3-2-3b-maas-apicast-production.apps.prod.rhoai.rh-aiservices-bu.com:443/v1"
-          max_tokens: 110000
-          api_token: ${env.LLAMA_3_2_3B_API_TOKEN}
-          tls_verify: true
       - provider_id: vllm-llama-4-guard
         provider_type: "remote::vllm"
         config:
