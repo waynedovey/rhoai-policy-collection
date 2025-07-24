@@ -7,3 +7,4 @@ metadata:
     maistra.io/member-of: istio-system
     modelmesh-enabled: "false"
     opendatahub.io/dashboard: "true"
+    openshift.io/cluster-monitoring: true
