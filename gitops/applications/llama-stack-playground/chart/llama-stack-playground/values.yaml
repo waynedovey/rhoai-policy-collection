@@ -3,7 +3,7 @@ replicaCount: 1
 
 image:
   repository: quay.io/eformat/streamlit_client  # quay.io/rh-aiservices-bu/llama-stack-playground
-  tag: "0.2.4"  # "0.2.1"
+  tag: "0.2.12"  # "0.2.4"  # "0.2.1"
   pullPolicy: Always
 
 imagePullSecrets: []
@@ -20,6 +20,7 @@ podAnnotations: {}
 
 podSecurityContext:
   runAsNonRoot: true
+  runAsUser: 1001
   # Remove specific UID/GID to let OpenShift assign them
   # fsGroup: 1001
 
@@ -31,7 +32,7 @@ securityContext:
   readOnlyRootFilesystem: false
   runAsNonRoot: true
   # Remove specific UID/GID to let OpenShift assign them
-  # runAsUser: 1001
+  runAsUser: 1001
   # runAsGroup: 1001
 
 service:
@@ -102,9 +103,9 @@ affinity: {}
 # Playground configuration
 playground:
   # Llama Stack backend URL
-  llamaStackUrl: "http://llama-stack"
+  llamaStackUrl: "http://llamastack-with-config-service:8321"
   # Default model to use
-  defaultModel: "meta-llama/Llama-3.2-3B-Instruct"
+  defaultModel: "granite-31-2b-instruct"
   # Enable/disable features
   enableChat: true
   enableAgents: true

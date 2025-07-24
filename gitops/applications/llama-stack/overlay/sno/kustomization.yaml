@@ -1,6 +1,5 @@
 ---
-namespace: agent-demo
+namespace: default
 
 resources:
-  - namespace.yaml
   - ../../base

@@ -1,9 +1,6 @@
 ---
-helmGlobals:
-  chartHome: ../chart/
+namespace: default
 
-helmCharts:
-  - name: llama-stack
-    includeCRDs: true
-    releaseName: llama-stack
-    valuesFile: values.yaml
+resources:
+  - configmap.yaml
+  - llama-stack.yaml
