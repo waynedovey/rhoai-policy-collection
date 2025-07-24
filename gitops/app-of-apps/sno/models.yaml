@@ -29,7 +29,7 @@ spec:
         repoURL: https://github.com/eformat/rhoai-policy-collection.git
         path: gitops/applications/models/overlay
         plugin:
-          name: argocd-novault-plugin-kustomize
+          name: argocd-vault-plugin-kustomize
         targetRevision: main
       syncPolicy:
         automated:
