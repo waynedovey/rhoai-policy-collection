@@ -23,10 +23,20 @@ spec:
         value: llamastack
       - name: QWEN_MODEL
         value: /mnt/models/Qwen3-1.7B-Q8_0.gguf
+      - name: QWEN_URL
+        value: http://sno-qwen31.llama-serving.svc.cluster.local:80/v1
       - name: DEEPSEEK_URL
         value: 'http://sno-deepseek-qwen3-vllm-predictor.llama-serving.svc.cluster.local:8080/v1'
       - name: DEEPSEEK_MODEL
         value: deepseek-r1-0528-qwen3-8b-bnb-4bit
+      - name: LLAMA3B_MODEL
+        value: llama3-2-3b
+      - name: LLAMA3B_URL
+        value: http://llama3-2-3b-predictor.llama-serving.svc.cluster.local:8080/v1
+      - name: GRANITE_MODEL
+        value: granite-3.2-2b-instruct
+      - name: GRANITE_URL
+        value: http://sno-granite32/v1
       - name: LLAMA_3_2_3B_API_TOKEN
         valueFrom:
           secretKeyRef:
