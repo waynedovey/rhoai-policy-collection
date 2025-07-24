@@ -5,5 +5,5 @@ metadata:
   labels:
     app.kubernetes.io/name: llama-stack-k8s-operator
     control-plane: controller-manager
-    openshift.io/cluster-monitoring: true
+    openshift.io/cluster-monitoring: "true"
   name: llama-stack-k8s-operator-controller-manager

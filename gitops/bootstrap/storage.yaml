@@ -41,7 +41,7 @@ spec:
             kind: Namespace
             metadata:
               labels:
-                openshift.io/cluster-monitoring: true
+                openshift.io/cluster-monitoring: "true"
               name: openshift-storage
         pruneObjectBehavior: None
         remediationAction: enforce
