@@ -3,3 +3,4 @@ namespace: agent-demo
 
 resources:
   - ../../base
+  - namespace.yaml
