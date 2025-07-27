@@ -14,11 +14,9 @@ spec:
       port: 8321
       env:
       - name: TELEMETRY_SINKS
-        value: 'console, sqlite, otel_trace'
-      - name: OTEL_TRACE_ENDPOINT
-        value: http://otel-collector-collector.observability-hub.svc.cluster.local:4318/v1/traces
-      - name: OTEL_METRIC_ENDPOINT
-        value: http://otel-collector-collector.observability-hub.svc.cluster.local:4318/v1/metrics
+        value: 'console, sqlite, otel_trace, otel_metric'
+      - name: OTEL_EXPORTER_OTLP_ENDPOINT
+        value: http://otel-collector-collector.observability-hub.svc.cluster.local:4318
       - name: OTEL_SERVICE_NAME
         value: llamastack
       - name: QWEN_MODEL
@@ -57,7 +55,7 @@ spec:
       - name: LLAMA_STACK_LOGGING
         value: all=debug
     distribution:
-      name: remote-vllm
-      # image: quay.io/eformat/distribution-remote-vllm:0.2.12
+      #name: remote-vllm
+      image: quay.io/eformat/distribution-remote-vllm:0.2.15
     userConfig:
       configMapName: llama-stack-config

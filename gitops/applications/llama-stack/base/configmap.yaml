@@ -26,16 +26,16 @@ data:
       model_id: ${env.DEEPSEEK_MODEL}
       provider_id: deepseek
       model_type: llm
-    - metadata:
-        embedding_dimension: 384
-      model_id: all-MiniLM-L6-v2
-      provider_id: sentence-transformers
-      model_type: embedding
     - metadata: {}
       model_id: llama-4-scout-17b-16e-w4a16
       provider_id: vllm-llama-4-guard
       provider_model_id: llama-4-scout-17b-16e-w4a16
       model_type: llm
+    - metadata:
+        embedding_dimension: 384
+      model_id: all-MiniLM-L6-v2
+      provider_id: sentence-transformers
+      model_type: embedding
     providers:
       inference:
       - provider_id: llama-3b
@@ -116,10 +116,10 @@ data:
       - provider_id: meta-reference
         provider_type: inline::meta-reference
         config:
-          service_name: ${env.OTEL_SERVICE_NAME:llama-stack}
-          sinks: ${env.TELEMETRY_SINKS:console, sqlite}
-          otel_trace_endpoint: ${env.OTEL_TRACE_ENDPOINT:}
-          sqlite_db_path: ${env.SQLITE_DB_PATH:~/.llama/distributions/remote-vllm/trace_store.db}
+          service_name: ${env.OTEL_SERVICE_NAME:=llama-stack}
+          sinks: ${env.TELEMETRY_SINKS:=console, sqlite, otel_metric, otel_trace}
+          otel_exporter_otlp_endpoint: ${env.OTEL_EXPORTER_OTLP_ENDPOINT:=}
+          sqlite_db_path: ${env.SQLITE_DB_PATH:=~/.llama/distributions/remote-vllm/trace_store.db}
       tool_runtime:
       - provider_id: rag-runtime
         provider_type: inline::rag-runtime
