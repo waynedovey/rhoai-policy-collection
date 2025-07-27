@@ -155,14 +155,14 @@ data:
     - toolgroup_id: mcp::weather
       provider_id: model-context-protocol
       mcp_endpoint:
-        uri: http://mcp-weather:80/sse
+        uri: http://mcp-weather.agent-demo.svc.cluster.local:80/sse
     - toolgroup_id: mcp::openshift
       provider_id: model-context-protocol
       mcp_endpoint:
-        uri: http://ocp-mcp-server:8000/sse
+        uri: http://ocp-mcp-server.agent-demo.svc.cluster.local:8000/sse
     - toolgroup_id: mcp::fast-mcp-tools
       provider_id: model-context-protocol
       mcp_endpoint:
-        uri: http://fast-mcp-tools:8000/sse
+        uri: http://fast-mcp-tools.agent-demo.svc.cluster.local:8000/sse
     server:
       port: 8321
