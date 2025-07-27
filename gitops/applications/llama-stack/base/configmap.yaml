@@ -124,7 +124,8 @@ data:
       - provider_id: milvus
         provider_type: inline::milvus
         config:
-          db_path: ${env.MILVUS_DB_PATH}
+          uri: http://milvus-service.milvus.svc.cluster.local:19530
+          token: root:Milvus
       tool_runtime:
       - provider_id: rag-runtime
         provider_type: inline::rag-runtime
