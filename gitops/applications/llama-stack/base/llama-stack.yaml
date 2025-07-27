@@ -58,5 +58,6 @@ spec:
         value: all=debug
     distribution:
       name: remote-vllm
+      image: quay.io/eformat/distribution-remote-vllm:0.2.12
     userConfig:
       configMapName: llama-stack-config
