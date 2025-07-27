@@ -19,11 +19,11 @@ data:
     - vector_io
     models:
     - metadata: {}
-      model_id: ${env.LLAMA3B_MODEL}
+      model_id: ${env.LLAMA3B_MODEL:=}
       provider_id: llama-3b
       model_type: llm
     - metadata: {}
-      model_id: ${env.DEEPSEEK_MODEL}
+      model_id: ${env.DEEPSEEK_MODEL:=}
       provider_id: deepseek
       model_type: llm
     - metadata: {}
@@ -42,16 +42,16 @@ data:
         provider_type: remote::vllm
         config:
           url: ${env.LLAMA3B_URL:http://localhost:8000/v1}
-          max_tokens: ${env.LLAMA3B_TOKENS:15000}
-          api_token: ${env.LLAMA3B_API_TOKEN:fake}
-          tls_verify: ${env.LLAMA3B_TLS_VERIFY:false}
+          max_tokens: ${env.LLAMA3B_TOKENS:=15000}
+          api_token: ${env.LLAMA3B_API_TOKEN:=fake}
+          tls_verify: ${env.LLAMA3B_TLS_VERIFY:=false}
       - provider_id: deepseek
         provider_type: remote::vllm
         config:
           url: ${env.DEEPSEEK_URL:http://localhost:8000/v1}
-          max_tokens: ${env.DEEPSEEK_TOKENS:10000}
-          api_token: ${env.DEEPSEEK_API_TOKEN:fake}
-          tls_verify: ${env.DEEPSEEK_TLS_VERIFY:false}
+          max_tokens: ${env.DEEPSEEK_TOKENS:=10000}
+          api_token: ${env.DEEPSEEK_API_TOKEN:=fake}
+          tls_verify: ${env.DEEPSEEK_TLS_VERIFY:=false}
       - provider_id: sentence-transformers
         provider_type: inline::sentence-transformers
         config: {}
@@ -132,7 +132,7 @@ data:
         config:
           api_key: brave-search-api-key
       - config:
-          api_key: ${env.TAVILY_SEARCH_API_KEY:}
+          api_key: ${env.TAVILY_SEARCH_API_KEY:=}
           max_results: 3
         provider_id: tavily-search
         provider_type: remote::tavily-search
