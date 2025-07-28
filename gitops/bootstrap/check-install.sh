@@ -91,7 +91,7 @@ check_gpus_allocatable() {
 check_llm_pods() {
     echo "🌴 Running check_llm_pods..."
     local i=0
-    PODS=$(oc get pods -n llama-serving | grep -e Running | wc -l)
+    PODS=$(oc get pods -n llama-serving | grep -e Running | grep -e 2/2 | wc -l)
     until [ "$PODS" == 2 ]
     do
         echo -e "${GREEN}Waiting for llm pods $PODS to equal 2.${NC}"
