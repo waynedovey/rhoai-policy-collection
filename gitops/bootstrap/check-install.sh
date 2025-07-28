@@ -114,7 +114,7 @@ check_llm_pods() {
             fi
         fi
         LLAMA_STATUS=$(oc -n llama-serving get $(oc get pods -n llama-serving -l app=isvc.llama3-2-3b-predictor -o name) -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}')
-        if [ "$LLAMA_STATUS" != "True" ] && [ "$1" > 15 ]; then
+        if [ "$LLAMA_STATUS" != "True" ] && [ "$i" > 15 ]; then
             # redeploy deepseek-qwen3
             oc delete configmap undeploy-sno-deepseek-qwen3-vllm -n llama-serving
         fi
