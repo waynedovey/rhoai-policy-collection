@@ -109,8 +109,14 @@ check_llm_pods() {
             LLAMA_STATUS=$(oc -n llama-serving get $(oc get pods -n llama-serving -l app=isvc.llama3-2-3b-predictor -o name) -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}')
             if [ "$DEEPSEEK_STATUS" == "True" ] && [ "$LLAMA_STATUS" != "True" ]; then
                 echo -e "${ORANGE}Killing deepseek pod so llama starts up first.${NC}"
-                oc -n llama-serving delete $(oc get pods -n llama-serving -l app=isvc.sno-deepseek-qwen3-vllm-predictor -o name)
+                # undeploy deepseek
+                oc create configmap undeploy-sno-deepseek-qwen3-vllm -n llama-serving
             fi
+        fi
+        LLAMA_STATUS=$(oc -n llama-serving get $(oc get pods -n llama-serving -l app=isvc.llama3-2-3b-predictor -o name) -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}')
+        if [ "$LLAMA_STATUS" != "True" ] && [ "$1" > 15 ]; then
+            # redeploy deepseek-qwen3
+            oc delete configmap undeploy-sno-deepseek-qwen3-vllm -n llama-serving
         fi
         PODS=$(oc get pods -n llama-serving | grep -e Running | wc -l)
     done
