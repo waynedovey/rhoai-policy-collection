@@ -75,7 +75,7 @@ roll_certs() {
     oc delete secrets/csr-signer-signer secrets/csr-signer -n openshift-kube-controller-manager-operator
 
     # clusteroperators roll kubeapi and others
-    oc adm wait-for-stable-cluster --minimum-stable-period=30s --timeout=5m
+    oc adm wait-for-stable-cluster --minimum-stable-period=45s --timeout=5m
 
     # output new certs - should be 30 day ones now
     oc describe secret/csr-signer -n openshift-kube-controller-manager-operator

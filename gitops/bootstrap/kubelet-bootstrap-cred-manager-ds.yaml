@@ -82,6 +82,7 @@ spec:
         - /bin/bash
         - -c
         - |
+           export TK="$(cat /run/secrets/kubernetes.io/serviceaccount/token)"
            chroot /host <<"EOT"
            set -eoux pipefail
            export KUBECONFIG=/etc/kubernetes/static-pod-resources/kube-apiserver-certs/secrets/node-kubeconfigs/lb-int.kubeconfig
@@ -123,7 +124,7 @@ spec:
            chown root:root ${KUBECONFIG}
            chmod 0644 ${KUBECONFIG}
            mv "${KUBECONFIG}" /etc/kubernetes/kubeconfig
-           oc label node \$NODE_NAME cred-manager/node-configured=$(date +%s) --token \$TOKEN --server https://172.30.0.1:443 --insecure-skip-tls-verify --overwrite
+           oc label node $NODE_NAME cred-manager/node-configured=$(date +%s) --token $TK  --server https://172.30.0.1:443 --insecure-skip-tls-verify --overwrite
            EOT
         env:
           - name: NODE_NAME
