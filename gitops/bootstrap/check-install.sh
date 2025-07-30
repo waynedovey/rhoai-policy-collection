@@ -105,13 +105,8 @@ check_llm_pods() {
         # vllm gpu_memory_utilization is calc on "current available" not actual
         # and we cannot predict who will start up first
         if [ "$PODS" == 1 ]; then
-            DEEPSEEK_STATUS=$(oc -n llama-serving get $(oc get pods -n llama-serving -l app=isvc.sno-deepseek-qwen3-vllm-predictor -o name) -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}')
-            LLAMA_STATUS=$(oc -n llama-serving get $(oc get pods -n llama-serving -l app=isvc.llama3-2-3b-predictor -o name) -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}')
-            if [ "$DEEPSEEK_STATUS" == "True" ] && [ "$LLAMA_STATUS" != "True" ]; then
-                echo -e "${ORANGE}Killing deepseek pod so llama starts up first.${NC}"
-                # undeploy deepseek
-                oc create configmap undeploy-sno-deepseek-qwen3-vllm -n llama-serving
-            fi
+            # undeploy deepseek
+            oc create configmap undeploy-sno-deepseek-qwen3-vllm -n llama-serving
         fi
         LLAMA_STATUS=$(oc -n llama-serving get $(oc get pods -n llama-serving -l app=isvc.llama3-2-3b-predictor -o name) -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}')
         if [ "$LLAMA_STATUS" != "True" ] && [ "$i" > 15 ]; then
