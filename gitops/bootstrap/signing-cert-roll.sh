@@ -41,24 +41,6 @@ check_done() {
     return 1
 }
 
-wait_for_pod_done() {
-    local i=0
-    oc wait --for=condition=Completed pod -l app.kubernetes.io/name=cluster-observability-operator -n openshift-cluster-observability-operator --timeout=300s
-    until [ "$?" == 0 ]
-    do
-        echo -e "${GREEN}Waiting for MachineConfig to be applied.${NC}"
-        sleep 5
-        ((i=i+1))
-        if [ $i -gt 300 ]; then
-            echo -e "🕱${RED}Failed - MachineConfig 99-kubens-master never found?.${NC}"
-            exit 1
-        fi
-        oc wait --for=condition=Completed pod -l app.kubernetes.io/name=cluster-observability-operator -n openshift-cluster-observability-operator --timeout=300s
-    done
-    echo "🌴 wait_for_pod_done ran OK"
-}
-
-
 roll_certs() {
     echo "🌴 Running roll_certs..."
 
@@ -69,7 +51,7 @@ roll_certs() {
     oc apply -f kubelet-bootstrap-cred-manager-ds.yaml
 
     # wait_for_pod_done
-    sleep 120
+    sleep 60
 
     # delete signer secrets
     oc delete secrets/csr-signer-signer secrets/csr-signer -n openshift-kube-controller-manager-operator
