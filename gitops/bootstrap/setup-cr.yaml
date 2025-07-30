@@ -217,7 +217,7 @@ spec:
           - '-n'
           - /usr/local/bin/argocd
           - /var/run/argocd/argocd-cmp-server
-        image: 'quay.io/argoproj/argocd:v2.14.7'
+        image: 'quay.io/argoproj/argocd:v2.14.13'
         imagePullPolicy: IfNotPresent
         name: copy-cmp-server
         resources: {}
@@ -252,7 +252,7 @@ spec:
     sidecarContainers:
       - command:
           - /var/run/argocd/argocd-cmp-server
-        image: 'quay.io/eformat/argocd-vault-sidecar:2.14.7'
+        image: 'quay.io/eformat/argocd-vault-sidecar:2.14.13'
         imagePullPolicy: Always
         name: vault-plugin
         resources: {}
@@ -276,7 +276,7 @@ spec:
             name: cmp-tmp-vault
       - command:
           - /var/run/argocd/argocd-cmp-server
-        image: 'quay.io/eformat/argocd-vault-sidecar:2.14.7'
+        image: 'quay.io/eformat/argocd-vault-sidecar:2.14.13'
         imagePullPolicy: Always
         name: vault-plugin-helm
         resources: {}
@@ -305,7 +305,7 @@ spec:
             value: /etc/kustomize/plugin
           - name: POLICY_GEN_ENABLE_HELM
             value: "true"
-        image: 'quay.io/eformat/argocd-vault-sidecar:2.14.7'
+        image: 'quay.io/eformat/argocd-vault-sidecar:2.14.13'
         imagePullPolicy: Always
         name: vault-plugin-kustomize
         resources: {}
@@ -337,7 +337,7 @@ spec:
             value: /etc/kustomize/plugin
           - name: POLICY_GEN_ENABLE_HELM
             value: "true"
-        image: 'quay.io/eformat/argocd-vault-sidecar:2.14.7'
+        image: 'quay.io/eformat/argocd-vault-sidecar:2.14.13'
         imagePullPolicy: Always
         name: vault-plugin-kustomize-novault
         resources: {}
@@ -364,7 +364,7 @@ spec:
             name: policy-generator
       - command:
           - /var/run/argocd/argocd-cmp-server
-        image: 'quay.io/eformat/argocd-vault-sidecar:2.14.7'
+        image: 'quay.io/eformat/argocd-vault-sidecar:2.14.13'
         imagePullPolicy: Always
         name: vault-plugin-helm-novault
         resources: {}
