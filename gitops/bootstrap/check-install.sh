@@ -104,12 +104,16 @@ check_llm_pods() {
         # this is because we need llama to start first before deepseek
         # vllm gpu_memory_utilization is calc on "current available" not actual
         # and we cannot predict who will start up first
-        if [ "$PODS" == 1 ]; then
+        if [ "$PODS" -le 1 ]; then
             # undeploy deepseek
-            oc create configmap undeploy-sno-deepseek-qwen3-vllm -n llama-serving
+            if oc get configmap undeploy-sno-deepseek-qwen3-vllm -n llama-serving &> /dev/null; then
+                echo -e "${GREEN}ConfigMap undeploy-sno-deepseek-qwen3-vllm exists in namespace llama-serving${NC}"
+            else
+                oc create configmap undeploy-sno-deepseek-qwen3-vllm -n llama-serving
+            fi
         fi
         LLAMA_STATUS=$(oc -n llama-serving get $(oc get pods -n llama-serving -l app=isvc.llama3-2-3b-predictor -o name) -o=jsonpath='{.status.conditions[?(@.type=="Ready")].status}')
-        if [ "$LLAMA_STATUS" != "True" ] && [ "$i" > 15 ]; then
+        if [ "$LLAMA_STATUS" == "True" ] && [ "$i" > 50 ]; then
             # redeploy deepseek-qwen3
             oc delete configmap undeploy-sno-deepseek-qwen3-vllm -n llama-serving
         fi
