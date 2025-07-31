@@ -61,6 +61,9 @@ roll_certs() {
 
     # output new certs - should be 30 day ones now
     oc describe secret/csr-signer -n openshift-kube-controller-manager-operator
+
+    # tidy up
+    oc delete ds kubelet-bootstrap-cred-manager -n openshift-machine-config-operator
 }
 
 usage() {
