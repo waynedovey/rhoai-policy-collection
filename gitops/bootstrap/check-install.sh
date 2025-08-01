@@ -57,7 +57,8 @@ check_pods_allocatable() {
         if [ $i -eq 100 ]; then
             echo -e "💀${ORANGE}Warn - check_pods_allocatable, forcing set-max-pods, continuing ${NC}"
             # MC bug, does not always trigger it seems - argocd will recreate this
-            oc delete KubeletConfig set-max-pods
+            oc delete kubeletconfig set-max-pods
+            oc delete kubeletconfig set-image-gc
         fi
         sleep 10
         PODS=$(oc get $(oc get node -o name -l node-role.kubernetes.io/master="") -o=jsonpath={.status.allocatable.pods})
