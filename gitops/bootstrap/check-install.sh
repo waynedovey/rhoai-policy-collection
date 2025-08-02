@@ -54,11 +54,15 @@ check_pods_allocatable() {
             echo -e "🕱${RED}Failed - node allocatable pods wrong - $PODS?.${NC}"
             exit 1
         fi
-        if [ $i -eq 100 ]; then
-            echo -e "💀${ORANGE}Warn - check_pods_allocatable, forcing set-max-pods, continuing ${NC}"
+        if [ $i > 100 ]; then
+            echo -e "💀${ORANGE}Warn - check_pods_allocatable, forcing kubeletconfigs, continuing ${NC}"
             # MC bug, does not always trigger it seems - argocd will recreate this
-            oc delete kubeletconfig set-max-pods
-            oc delete kubeletconfig set-image-gc
+            if oc get kubeletconfig set-image-gc -o yaml | grep "could not Create"; then
+                oc delete kubeletconfig set-image-gc
+            fi
+            if oc get kubeletconfig set-max-pods -o yaml | grep "could not Create"; then
+                oc delete kubeletconfig set-max-pods
+            fi
         fi
         sleep 10
         PODS=$(oc get $(oc get node -o name -l node-role.kubernetes.io/master="") -o=jsonpath={.status.allocatable.pods})
