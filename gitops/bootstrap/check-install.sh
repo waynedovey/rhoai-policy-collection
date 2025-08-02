@@ -57,10 +57,10 @@ check_pods_allocatable() {
         if [ $i > 100 ]; then
             echo -e "💀${ORANGE}Warn - check_pods_allocatable, forcing kubeletconfigs, continuing ${NC}"
             # MC bug, does not always trigger it seems - argocd will recreate this
-            if oc get kubeletconfig set-image-gc -o yaml | grep "could not Create"; then
+            if oc get kubeletconfig set-image-gc -o yaml | grep "could not"; then
                 oc delete kubeletconfig set-image-gc
             fi
-            if oc get kubeletconfig set-max-pods -o yaml | grep "could not Create"; then
+            if oc get kubeletconfig set-max-pods -o yaml | grep "could not"; then
                 oc delete kubeletconfig set-max-pods
             fi
         fi
