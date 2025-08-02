@@ -122,7 +122,7 @@ check_llm_pods() {
             # redeploy deepseek-qwen3
             oc delete configmap undeploy-sno-deepseek-qwen3-vllm -n llama-serving
         fi
-        PODS=$(oc get pods -n llama-serving | grep -e Running | wc -l)
+        PODS=$(oc get pods -n llama-serving | grep -e Running | grep -e 2/2 | wc -l)
     done
     echo "🌴 check_llm_pods $PODS ran OK"
 }
